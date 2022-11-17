@@ -1,0 +1,193 @@
+/*Class pai*/
+.sectionMesaDetalhe {
+    display: none;
+
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.sectionMesaDetalhe button {
+    display: flex;
+    padding: 1.2rem;
+    margin: auto;
+    margin-top: 1rem;
+
+    font-size: 1rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+table {
+    margin: auto;
+    margin-top: 1rem;
+    
+    font-size: 1.2rem;
+    text-align: center;
+    border-spacing: 1.5rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Img para remoção de pedido */
+table img {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: baseline;
+    
+    border-radius: 60%;
+    transition: background-color 0.6s;
+}
+
+table img:hover {
+    transition: background-color 0.6s;
+    background-color: rgb(245, 43, 43);
+}
+
+/* Botao para fechar card*/
+.tools {
+    position: absolute;
+    display: flex;
+    padding: 9px;
+}
+
+.box {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    margin: 0rem;
+    padding: 1px;
+    
+    border-radius: 50%;
+}
+
+.red {
+    transition: background-color 0.6s;
+    background-color: rgb(233, 44, 44);
+}
+
+.red:hover{
+    transition: background-color 0.6s;
+    background-color: rgb(131, 11, 11);
+}
+
+/* Deixar o Blur de fundo */
+.blur {
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+
+    backdrop-filter: blur(30px);
+}
+
+/* Card do detalhe da mesa */
+.detalheMesa h1 {
+    margin-bottom: 0rem;
+
+    text-align: center;
+    font-size: 2rem;
+    color: rgb(236, 199, 149);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.detalheMesa h3 {
+    margin: 1rem;
+    margin-top: 0.5rem;
+
+    font-size: 1.5rem;
+    color: rgb(109, 204, 236);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+.detalheMesa h4 {
+    margin: 0.2rem;
+    
+    font-size: 1.3rem;
+    color: rgb(209, 213, 226);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.detalheMesa{
+    height: auto;
+    width: auto;
+    max-width: 35rem;
+
+    background-color: rgba(14, 94, 110, 0.568);
+    border-radius: 45px;
+    opacity: 0.9;
+
+    margin: auto;
+    margin-top: 5rem;
+    padding: 2rem;
+}
+
+/* Pagamento */
+.pagamento option {
+    background-color: rgba(14, 94, 110, 0.568);
+    
+    font-size: 1.2rem;
+    color: rgb(209, 213, 226);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.pagamento select {
+    min-width: 5rem;
+    width: auto;
+    max-width: 7rem;
+    height: auto;
+
+    background-color: rgba(14, 94, 110, 0);
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    font-size: 1.2rem;
+    color: rgb(209, 213, 226);
+    border: none;
+
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pagamento select:focus {
+    border: none;
+    outline: none;
+}
+
+.pagamento input {
+    width: 7rem;
+    height: 2.2rem;
+    padding: 0.2rem;
+    border: none;
+    outline: none;
+    
+    background-color: rgb(128, 134, 146);
+    border-radius: 18px;
+
+    transition: box-shadow 0.6s;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    
+    color: rgb(217, 225, 233);
+    text-align: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pagamento input:hover {
+    outline: none;
+}
+
+.pagamento {
+    margin: auto;
+    margin-top: 2rem;
+    
+    font-size: 1.2rem;
+    text-align: center;
+    border-spacing: 1.5rem;
+    color: rgb(217, 225, 233);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}

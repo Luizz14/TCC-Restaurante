@@ -8,7 +8,7 @@
 header h1 {
     font-size: 2rem;
     text-align: center;
-    color: #BFC1CF;
+    color: rgb(191, 193, 207);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -16,7 +16,7 @@ header {
     width: auto;
     height: 3rem;
     padding: 0.5rem;
-    background-color: #252D30;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Categorizar */
@@ -25,11 +25,11 @@ header {
     margin-bottom: 0.2rem;
 
     font-size: 1.8rem;
-    color: #BFC1CF;
+    color: rgb(78, 84, 95);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Barra para separar os produtos */
+/* Barra para separar as categorias */
 .bar {
 margin: 1rem;
 margin-top: 0.2rem;
@@ -38,7 +38,7 @@ height: 0.1rem;
 padding: 0.1rem;
 
 box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-background-color: #252d30;
+background-color: rgba(0, 0, 0, 0.2);
 border-radius: 8rem;
 }
 
@@ -48,7 +48,7 @@ border-radius: 8rem;
     margin-bottom: 0.6rem; 
     font-size: 1.2rem;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-    color: #0A84FF;
+    color: rgb(10, 132, 255);
 }
 
 .cardProduto h2 {
@@ -79,6 +79,7 @@ border-radius: 8rem;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     color: rgb(213, 226, 235);
 }
+
 /* Input para inserir o numero da mesa e a qtd do produto */
 .cardProduto input{
     width: 3rem;
@@ -88,7 +89,7 @@ border-radius: 8rem;
     margin: 1.2rem;
     margin-left: 0rem;
 
-    background-color: #3a464b;
+    background-color: rgb(93, 100, 117);
     border-radius: 18px;
 
     transition: box-shadow 0.6s;
@@ -98,13 +99,18 @@ border-radius: 8rem;
     text-align: center;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
+
+.cardProduto input:focus {
+    border: none;
+    outline: none;
+}
+
 /* Card dos produtos */
 .cardProduto{
     width: auto;
     height: auto;
-    /* max-height: 4.8rem; */
     padding: 0.2rem;
-    background-color: #252D30;
+    background-color: rgb(10, 72, 85);
     border-radius: 1rem;
 
     margin: 1.2rem;
@@ -113,14 +119,6 @@ border-radius: 8rem;
 
     overflow: hidden;
 }
-
-/*
-.cardProduto:hover{
-    max-height: 20rem;
-    transition: max-height 1s, background-color 0.6s;
-    background-color: #202629;
-}
-*/
 
 /* NavBar das categorias */
 .menu-categorias {
@@ -131,7 +129,7 @@ border-radius: 8rem;
     padding: 0.5rem;
 
     justify-content: center;
-    background-color: #3a464b;
+    background-color: rgb(128, 134, 146);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -145,7 +143,7 @@ border-radius: 8rem;
 .menu-categorias a {
     text-decoration: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #0A84FF;
+    color: rgb(204, 202, 198);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -159,4 +157,6 @@ border-radius: 8rem;
     margin: 3rem;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
+
+    background-color: rgb(206, 193, 176);
 }

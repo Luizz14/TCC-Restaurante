@@ -1,14 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 /*Button geral*/
-.btnPadrao{
+.btnPadrao {
     position: relative;
     width: 5rem;
     height: 2.2rem;
     margin: 1rem;
     padding: 0.2rem;
     bottom: 0px;   
+    line-height: initial;
 
-    background-color: #0A84FF;
+    background-color: rgb(121, 178, 197);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     border: none;
     border-radius: 18px;
@@ -23,23 +24,29 @@
     transform: translateY(-1.5px);
 }
 
-.btnPadrao:active{
+.btnPadrao:active {
     transform: translateY(1.5px);
     transition: background-color 0.6s;
-    background-color: #0c75df;
+    background-color: rgb(10, 132, 255);
+    border: none;
+}
+
+.btnPadrao:focus {
+    border: none;
+    outline: none;
 }
 
 /*Button de pesquisa para mesas (Tela caixa)*/
-#pesquisa{
-    background-color: #252D30;
+#pesquisa {
+    background-color: rgba(0, 0, 0, 0.2);
 
-    color: #dce1e2;
+    color: rgb(220, 225, 226);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     margin-left: 0.5rem;
 }
 
 /* Button para adicionar produdo na mesa (Tela garçom) */
-#adicionarProd{
+#adicionarProd {
     width: auto;
     height: auto;
     margin: 1.2rem;

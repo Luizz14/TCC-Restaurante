@@ -1,4 +1,5 @@
-.sectionPesquisa{
+/* Pesquisa das mesas */
+.sectionPesquisa {
     padding: 0.5rem;
     text-align: center;
     font-size: 1.2rem;
@@ -7,27 +8,29 @@
 .sectionPesquisa label {
     font-size: 1.3rem;
     margin: 0.5rem;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    color: rgb(50, 89, 102);
+    text-shadow: 2px 2px 6px rgba(47, 47, 49, 0.315);
 }
 
-.sectionPesquisa input{
+.sectionPesquisa input {
     width: 7rem;
     height: 2.2rem;
     padding: 0.2rem;
     border: none;
     
-    background-color: #252D30;
+    background-color: rgb(93, 100, 117);
     border-radius: 18px;
 
     transition: box-shadow 0.6s;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     
-    color: aliceblue;
+    color: rgb(168, 204, 236);
     text-align: center;
 }
 
-.sectionPesquisa input:focus{
+.sectionPesquisa input:focus {
     border: none;
     transition: box-shadow 0.6s;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.219);
+    outline: none;
 }
