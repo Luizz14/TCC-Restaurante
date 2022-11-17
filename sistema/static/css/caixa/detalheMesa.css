@@ -1,0 +1,84 @@
+/*Class pai*/
+.sectionMesaDetalhe{
+    display: none;
+
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.sectionMesaDetalhe h1{
+    text-align: center;
+    font-size: 2rem;
+    color: rgb(166, 168, 175);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sectionMesaDetalhe th{
+    color: #0A84FF;
+}
+
+.sectionMesaDetalhe button{
+    padding: 1.2rem;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Blur e card mesa */
+.blur{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(30px);
+}
+
+.detalheMesa{
+    height: auto;
+    min-width: 25rem;
+    max-width: 30rem;
+    background-color: #252D30;
+    opacity: 0.9;
+    margin: auto;
+    margin-top: 5rem;
+    border-radius: 45px;
+}
+
+/* Botao para fechar card*/
+.tools{
+    display: flex;
+    padding: 9px;
+}
+
+.box{
+    width: 15px;
+    height: 15px;
+    padding: 1px;
+    border-radius: 50%;
+    margin: 20px;
+}
+
+.red {
+    transition: background-color 0.6s;
+    background-color: rgb(233, 44, 44);
+}
+
+.red:hover{
+    transition: background-color 0.6s;
+    background-color: rgb(131, 11, 11);
+}
+
+/* */
+
+table{
+    font-size: 1.2rem;
+    margin: auto;
+    margin-top: 1rem;
+    text-align: center;
+    border-spacing: 1.5rem;
+    color: aliceblue;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}

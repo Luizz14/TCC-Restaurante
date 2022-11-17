@@ -1,0 +1,25 @@
+/*Card das mesas*/
+.cardMesa {
+    background-color: #252D30;
+    border-radius: 16px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+
+    min-width: 10.5rem;
+    max-width: 18rem;
+    min-height: auto;
+    max-height: 50rem;
+    margin: 1rem;
+    padding: 1.5rem;
+
+    text-align: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    color: #bdbdbd;
+    letter-spacing: 0.5px;
+}
+
+.cardMesa a {
+    text-decoration: none;
+    margin: 1rem;
+    font-size: 1.2rem;
+}

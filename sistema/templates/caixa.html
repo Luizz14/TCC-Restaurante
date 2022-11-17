@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa</title>
+    <link rel="stylesheet" href="{% static 'css/caixa/cardMesas.css' %}">
+    <link rel="stylesheet" href="/css/navigationBar.css">
+    <link rel="stylesheet" href="/css/predefinicoes.css">
+    <link rel="stylesheet" href="{% static 'css/caixa/pesquisa.css' %}">
+    <link rel="stylesheet" href="{% static 'css/caixa/detalheMesa.css' %}">
+    <script src="/sistema/static/css/caixa/detalheMesa.js"></script>
+</head>
+<body class="tela">
+    <!-- Nav Bar -->
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <ul class="menu-items">
+                <li><a href="#">Mesas</a></li>
+                <li><a href="#">Cozinha</a></li>
+                <li><a href="#">Cardápio</a></li>
+            </ul>
+            <img src="/imagens/logoIrineus.png" alt="" id="imgLogo">
+            <h1 class="logo">Restaurante Irineu's</h1>
+        </div>
+    </nav>
+    <!-- Card Mesa Detalhe-->
+    <section class="sectionMesaDetalhe">
+        <span class="blur">
+            <div class="detalheMesa">
+                <div class="tools">
+                    <span class="red box" onclick="detalheMesaOcultar()"></span>
+                </div>
+                <h1>Mesa</h1>
+                <table>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Quantidade</th>
+                        <th>Valor</th>
+                    </tr>
+                    <tr>
+                        <td>Batata-Frita</td>
+                        <td>3x</td>
+                        <td>R$20,00</td>
+                    </tr>
+                    <tr>
+                        <th>Serviço</th>
+                        <th>Sub-Total</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr>
+                        <td>R$ 5,00</td>
+                        <td>R$50,00</td>
+                        <td>R$55,00</td>
+                    </tr>
+                    <tr>
+                        <td><button class="btnPadrao">Retirar 10%</button></td>
+                        <td><button class="btnPadrao">Puxar conta</button></td>
+                        <td><button class="btnPadrao">Pagar</button></td>
+                    </tr>
+                </table>      
+            </div>
+        </span>
+    </section>
+    <!-- Pesquisa das mesas -->
+    <section class="sectionPesquisa">
+        <div>
+            <label class="labelPesquisarMesa" for="pesquisarMesa">Pesquisar Mesa</label>
+            <input type="search" class="pesquisarMesa" placeholder="Mesa">
+            <input type="button" id="pesquisa" class="btnPadrao" value="Pesquisar">
+        </div>
+    </section>
+        <!-- Section das div dos pedidos-->
+    <section class="sectionSobFundo">
+        <div id="cardMesa" class="cardMesa">
+            <h1>Mesa</h1>
+            <h2>---</h2>
+
+            <a>Entrada: 00:00</a>
+            <a>Valor: R$00,00</a>
+            <a>Garçom: -----</a>
+            <a><input type="button" value="Detalhes" class="btnPadrao" onclick="detalheMesa()"></a>
+        </div>
+    </section>
+</body>
+</html>

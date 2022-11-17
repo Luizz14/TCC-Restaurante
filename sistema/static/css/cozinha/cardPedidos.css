@@ -1,0 +1,57 @@
+/*Card de pedidos*/
+.cardPedido{
+    display: inline-block;
+    margin: 2rem;
+    margin-bottom: 0rem;
+    padding: 0.5rem;
+    min-width: 25rem;
+    height: auto;
+    max-height: 25rem;
+    
+    background-color: #252D30;
+    border-radius: 16px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    
+    text-align: center;
+}
+
+.cardPedido h1{
+    margin: 0rem;
+    color: #006bd6;
+    font-size: 3rem;
+}
+
+.cardPedido h2{
+    font-size: 1.5rem;
+    color: #BFC1CF;
+    margin: 0.3rem;
+}
+
+.cardPedido a{
+    font-size: 1.6rem;
+    color: #c54e45;
+    margin: 2rem;
+}
+
+/* Botao para retirar pedido*/
+.tools{
+    display: flex;
+    padding: 9px;
+}
+
+.box{
+    width: 1rem;
+    height: 1rem;
+    padding: 1px;
+    border-radius: 50%;
+}
+
+.red {
+    transition: background-color 0.6s;
+    background-color: rgb(233, 44, 44);
+}
+
+.red:hover{
+    transition: background-color 0.6s;
+    background-color: rgb(131, 11, 11);
+}
