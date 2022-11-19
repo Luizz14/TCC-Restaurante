@@ -10,7 +10,7 @@ class produto(models.Model):
     nomeProduto = models.CharField('nome', max_length=45)
     descicaoProduto = models.CharField('descricao', max_length=90)
     valorUnitario = models.DecimalField('valor', max_digits=8, decimal_places=2)
-    categoriaProduto = models.CharField('categoria', max_length=1)
+    categoriaProduto = models.CharField('categoria', max_length=50)
     
 
 def produto_pre_save(signal, instance, sender, **kwargs):
@@ -18,3 +18,40 @@ def produto_pre_save(signal, instance, sender, **kwargs):
 
 signals.pre_save.connect(produto_pre_save, sender=produto)
 
+class pessoa(models.Model):
+    nome = models.CharField('nome', max_length= 50)
+    cpf = models.CharField('cpf', max_length=11)
+    senha = models.CharField('senha', max_length=8)
+    telefone = models.BigIntegerField('telefone')
+    tipo = models.CharField('tipo', max_length=1)
+
+    def __str__(self):
+        return self.nome 
+
+class mesa(models.Model):
+    numeroMesa = models.IntegerField('numeroMesa')
+
+
+class pedido(models.Model):
+    dataPedido = models.DateField('dataPedido')
+    pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
+    produto = models.ForeignKey(produto, on_delete=models.CASCADE)
+    #Retirar tabela produto
+    mesa = models.ForeignKey(mesa, on_delete=models.CASCADE)
+
+class itemPedido(models.Model):
+    valorItemPedido = models.DecimalField('valorItemPedido', max_digits=8, decimal_places=2)
+    quantidadeItemPedido = models.IntegerField('quantidadeItemPedido')
+    statusItem = models.CharField('statusItemPedido', max_length=5)
+    pedido = models.ForeignKey(pedido, on_delete=models.CASCADE)
+    produto = models.ForeignKey(produto, on_delete=models.CASCADE)
+    pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
+
+class pagamento(models.Model):
+    formaPagamento = models.CharField('formaPagamento', max_length=1)
+    dataPagamento = models.DateField('dataPagamento')
+    valorPagamento = models.DecimalField('valorPagamento', max_digits=8, decimal_places=2)
+    pedido = models.ForeignKey(pedido, on_delete=models.CASCADE)
+    pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
+    produto = models.ForeignKey(produto, on_delete=models.CASCADE)
+    mesa = models.ForeignKey(mesa, on_delete=models.CASCADE)

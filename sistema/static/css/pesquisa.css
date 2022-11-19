@@ -1,24 +1,21 @@
 /* Pesquisa das mesas */
-.sectionPesquisa {
-    padding: 0.5rem;
+.pesquisaMesa {
     text-align: center;
     font-size: 1.2rem;
+    display: flex;
+    height: 3rem;
 }
 
-.sectionPesquisa label {
-    font-size: 1.3rem;
-    margin: 0.5rem;
-    color: rgb(50, 89, 102);
-    text-shadow: 2px 2px 6px rgba(47, 47, 49, 0.315);
-}
-
-.sectionPesquisa input {
-    width: 7rem;
+.pesquisaMesa input {
+    width: 9rem;
     height: 2.2rem;
-    padding: 0.2rem;
+    padding: 0.4rem;
     border: none;
+    margin: 1rem;
+    margin-bottom: 0rem;
+    margin-top: 0rem;
     
-    background-color: rgb(93, 100, 117);
+    background-color: rgb(41, 52, 78);
     border-radius: 18px;
 
     transition: box-shadow 0.6s;
@@ -28,9 +25,14 @@
     text-align: center;
 }
 
-.sectionPesquisa input:focus {
+.pesquisaMesa input:focus {
     border: none;
     transition: box-shadow 0.6s;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.219);
     outline: none;
+}
+
+.pesquisaMesa img {
+    width: 1.5rem;
+    height: 1.5rem;
 }

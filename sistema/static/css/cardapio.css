@@ -16,7 +16,7 @@ header {
     width: auto;
     height: 3rem;
     padding: 0.5rem;
-    background-color: rgba(0, 0, 0, 0.2);
+    background: rgb(128, 134, 146);
 }
 
 /* Categorizar */
@@ -31,15 +31,15 @@ header {
 
 /* Barra para separar as categorias */
 .bar {
-margin: 1rem;
-margin-top: 0.2rem;
-width: auto;
-height: 0.1rem;
-padding: 0.1rem;
+    margin: 1rem;
+    margin-top: 0.2rem;
+    width: auto;
+    height: 0.1rem;
+    padding: 0.1rem;
 
-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-background-color: rgba(0, 0, 0, 0.2);
-border-radius: 8rem;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8rem;
 }
 
 /* Card para os produtos */
@@ -123,13 +123,14 @@ border-radius: 8rem;
 /* NavBar das categorias */
 .menu-categorias {
     display: flex; 
-    position: static;
-    width: auto;
+    width: 95%;
     height: auto;
     padding: 0.5rem;
+    margin: auto;
+    border-radius: 18rem;
 
     justify-content: center;
-    background-color: rgb(128, 134, 146);
+    background-color: rgb(20, 71, 112);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -158,5 +159,5 @@ border-radius: 8rem;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
 
-    background-color: rgb(206, 193, 176);
+    background-color: rgb(199, 181, 158);
 }

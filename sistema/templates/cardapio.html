@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio</title>
     <link  rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"  crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/predefinicoes.css">
-    <link rel="stylesheet" href="/css/buttons.css">
-    <link rel="stylesheet" href="/css/cardapio.css">
-    <script src="/js/pedidoStatus.js"></script>
+    <link rel="stylesheet" href="{% static 'css/predefinicoes.css' %}">
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cardapio.css' %}">
+    <script src="{% static 'js/pedidoStatus.js' %}"></script>
 </head>
 <body class="tela" onload="pedidoStatus()">
     <!-- Titulo da pagina -->
@@ -29,50 +31,41 @@
         <section class="tab-pane fade show active" id="pills-cardapio" role="tabpanel" aria-labelledby="pills-cardapio-tab">
             <!-- Menu para as categorias -->
             <ul class="menu-categorias">
-                <li><a href="#almoco">Almoço</a></li>
-                <li><a href="#petisco">Petisco</a></li>
-                <li><a href="#bebidas">Bebidas</a></li>
-                <li><a href="#drink">Drink's</a></li>
+                {% for produto in prod %}
+                <li><a href="#{{ produto.categoriaProduto }}">{{ produto.categoriaProduto }}</a></li>
+                {% endfor %}
             </ul>
             <!-- Sessao de categorias -->
-            <section class="categoria">
+            {% for produto in prod %}
+            <section class="categoria" id="{{ produto.categoriaProduto }}">
                 <!-- Nome da categoria -->
-                <div id="almoco">
-                    <h1>Almoço</h1>
+                <div>
+                    <h1>{{ produto.categoriaProduto }}</h1>
                     <div class="bar"></div>
                 </div>
                 <!-- Card produtos -->
-                <div class="cardProduto" >
-                    <h1 data-toggle="collapse" href="#prodColapse">Peixe-Frito</h1>
-                    <h2>Peixe emposta, arroz, feijão, vinagrete.</h2>
+                {% for produto in prod %}
+                {% if produto.categoriaProduto == produto.categoriaProduto %}
+                <div class="cardProduto">
+                    <h1 data-toggle="collapse" href="#colapse{{ produto.id }}">{{ produto.nomeProduto }}</h1>
+                    <h2>{{ produto.descicaoProduto }} </h2>
+                    <h2>R${{ produto.valorUnitario }}</h2>
                     <!-- Div colapse para recolher a div -->
-                    <div class="collapse" id="prodColapse">
-                        <label for="mesa">Mesa: </label>
-                        <input type="text" name="mesa">
-                        <label for="quantidade">Quantidade: </label>
-                        <input type="number" name="quantidade" value="1">
-                        <button id="adicionarProd" class="btnPadrao">Adicionar</button>
+                    <div class="collapse" id="colapse{{ produto.id }}">
+                        <form action="{% url 'inserir' %}" method="post" autocomplete="off">
+                            {% csrf_token %}
+                            <label for="mesa">Mesa: </label>
+                            <input type="text" name="numeroMesa">
+                            <label for="quantidade">Quantidade: </label>
+                            <input type="number" name="quantidadeItemPedido" value="1">
+                            <button id="adicionarProd" class="btnPadrao" type="submit">Adicionar</button>
+                        </form>
                     </div>
                 </div>
-                <!-- Nome da categoria -->
-                <div id="petisco">
-                    <h1>Petisco</h1>
-                    <div class="bar"></div>
-                </div>
-                <!-- Card produtos -->
-                <div class="cardProduto" data-toggle="collapse" href="#prodColapse">
-                    <h1>Peixe-Frito</h1>
-                    <h2>Batata-Frita feita no óleo.</h2>
-                    <!-- Div colapse para recolher a div -->
-                    <div class="collapse" id="prodColapse">
-                        <label for="mesa">Mesa: </label>
-                        <input type="text" name="mesa">
-                        <label for="quantidade">Quantidade: </label>
-                        <input type="number" name="quantidade" value="1">
-                        <button id="adicionarProd" class="btnPadrao">Adicionar</button>
-                    </div>
-                </div>
+                {% endif %}
+                {% endfor %}
             </section>
+            {% endfor %}
         </section>
         <!-- Sessão de pedidos -->
         <section class="tab-pane fade" id="pills-pedidos" role="tabpanel" aria-labelledby="pills-pedidos-tab">
