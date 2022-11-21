@@ -52,6 +52,11 @@ def cardapio(request):
     return render(request, 'cardapio.html', context)
 
 def inserir(request):
+
+    #if request.method == 'POST':
+        #form = forms.Inserir(request.POST)
+        #if
+
     m = request.POST.get('numeroMesa')
     mesa.objects.create(numeroMesa = m)
     
