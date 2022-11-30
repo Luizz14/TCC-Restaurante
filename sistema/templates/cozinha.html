@@ -43,15 +43,20 @@
             <!-- Cards de pedidos -->
             {% for itemPedido in pedidoA %}
             <div class="cardPedido">
-                <div class="tools">
-                    <span class="red box" onclick=""></span>
-                </div>
+                <form action="{% url 'cozinhaPedidoCancelado' itemPedido.id %}">
+                    {% csrf_token %}
+                    <button class="btnPadrao">Cancelado</button>
+                </form>
+                </form>
                 <h1>{{ itemPedido.produto.nomeProduto }}</h1>
                 <h2>Mesa {{ itemPedido.pedido.mesa.numeroMesa }}</h2>
                 <h2>Garçom: {{ itemPedido.pessoa.nome }}</h2>
                 <h2>Quantidade: {{ itemPedido.quantidadeItemPedido }}</h2>
                 <h2>Entrada: {{ itemPedido.pedido.dataPedido }}</h2>
-                <button class="btnPadrao">Pronto</button>
+                <form action="{% url 'cozinhaPedidoPronto' itemPedido.id %}">
+                    {% csrf_token %}
+                    <button class="btnPadrao">Pronto</button>
+                </form>
             </div>
             {% endfor %}
         </section>

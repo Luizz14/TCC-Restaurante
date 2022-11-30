@@ -45,24 +45,22 @@
                 </div>
                 <!-- Card produtos -->
                 {% for produto in prod %}
-                {% if produto.categoriaProduto == produto.categoriaProduto %}
                 <div class="cardProduto">
                     <h1 data-toggle="collapse" href="#colapse{{ produto.id }}">{{ produto.nomeProduto }}</h1>
                     <h2>{{ produto.descicaoProduto }} </h2>
                     <h2>R${{ produto.valorUnitario }}</h2>
                     <!-- Div colapse para recolher a div -->
                     <div class="collapse" id="colapse{{ produto.id }}">
-                        <form action="{% url 'inserir' %}" method="post" autocomplete="off">
+                        <form method="post" autocomplete="off">
                             {% csrf_token %}
-                            <label for="mesa">Mesa: </label>
+                            <label for="">Mesa: </label>
                             <input type="text" name="numeroMesa">
-                            <label for="quantidade">Quantidade: </label>
+                            <label for="{{ form.quantidadeItemPedido.id_for_label }}">Quantidade: </label>
                             <input type="number" name="quantidadeItemPedido" value="1">
                             <button id="adicionarProd" class="btnPadrao" type="submit">Adicionar</button>
                         </form>
                     </div>
                 </div>
-                {% endif %}
                 {% endfor %}
             </section>
             {% endfor %}
@@ -73,29 +71,41 @@
                 <h1>Pedidos prontos</h1>
                 <div class="bar"></div>
             </div>
+
+            {% for itemPedido in pedidoP %}
             <div class="cardProduto" id="pedido">
-                <h1>Peixe-Frito</h1>
+                <h1>{{ itemPedido.produto.nomeProduto }}</h1>
                 <a id="status">Pedido pronto</a>
                 <h2>Mesa: --</h2>
             </div>
+            {% endfor %}
+
             <div class="categoria">
                 <h1>Pedidos em andamento</h1>
                 <div class="bar"></div>
             </div>
+            
+            {% for itemPedido in pedidoA %}
             <div class="cardProduto" id="pedido">
-                <h1>Peixe-Frito</h1>
+                <h1>{{ itemPedido.produto.nomeProduto }}</h1>
                 <a id="status">Pedido em andamento</a>
                 <h2>Mesa: --</h2>
             </div>
+            {% endfor %}
+
             <div class="categoria">
                 <h1>Pedidos cancelados</h1>
                 <div class="bar"></div>
             </div>
+
+            {% for itemPedido in pedidoC %}
             <div class="cardProduto" id="pedido">
-                <h1>Peixe-Frito</h1>
+                <h1>{{ itemPedido.produto.nomeProduto }}</h1>
                 <a id="status">Pedido cancelado</a>
                 <h2>Mesa: --</h2>
             </div>
+            {% endfor %}
+
         </section>
     </div>
 

@@ -11,11 +11,11 @@
     height: 2.2rem;
     padding: 0.4rem;
     border: none;
-    margin: 1rem;
-    margin-bottom: 0rem;
-    margin-top: 0rem;
+    margin-left: 1.5rem;
+    margin-right: 0.5rem;
     
-    background-color: rgb(41, 52, 78);
+    background-color: rgb(65, 70, 80);
+    opacity: 0.8;
     border-radius: 18px;
 
     transition: box-shadow 0.6s;

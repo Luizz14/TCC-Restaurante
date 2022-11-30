@@ -11,3 +11,11 @@ function pedidoStatus() {
         }
     }
 }
+
+function nonePedido() {
+    let displayVar
+    
+    if (displayVar == 2) {
+        displayVar.styles.display = 'none'
+    } 
+}

@@ -1,78 +1,90 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView
+from django.views.generic import RedirectView
 
 from .models import produto, itemPedido, mesa, pessoa, pedido, pagamento
+from decimal import Decimal
 
 def login(request):
     return render(request, 'login.html')
 
 def caixa(request):
+    #itemPedidos = itemPedido.objects.all()
 
+    #Calcular o valor da mesa:
+    for itemPedidos in itemPedido.objects.all():
+        qtd = itemPedidos.quantidadeItemPedido
+        prod = itemPedidos.produto.valorUnitario
+        valorItem = itemPedidos.valorItemPedido
+
+        valorItem = qtd * prod
+        print(f'Valor Item: {valorItem}')
+        #valorItem.save()
+
+        valorMesas = itemPedidos.pedido.valor
+
+        valorMesas = valorMesas + valorItem 
+        print(f'Valor da Mesa: {valorMesas}')
+        
     context = {
         'pedidos': pedido.objects.all(),
-        'mesas': mesa.objects.all(),
-        'itemPedidos': itemPedido.objects.all()
+        'itemPedidos': itemPedido.objects.all(),
     }
 
     return render(request, 'caixa.html', context)
 
-def cozinha(request):
-    pedidoPronto = itemPedido.objects.filter(statusItem = 'p')
-    #pedidoPronto = produto.objects.exclude(categoriaProduto = 'Bebida')
-
-    pedidoAndamento = produto.objects.exclude(categoriaProduto = 'Bebida')
-    pedidoAndamento = itemPedido.objects.filter(statusItem='a')
-
-    buttonPronto = itemPedido.objects.get(statusItem = 'p')
-    #buttonPronto.save()
-    context = {
-        'pedidoP': pedidoPronto,
-        'pedidoA': pedidoAndamento,
-    }
-
-    return render(request, 'cozinha.html', context)
-
-
-
 def cardapio(request):
     produtos = produto.objects.all()
     
-    """
-    almoco = produto.objects.filter(categoriaProduto = 'Almoço')
     pedidoPronto = itemPedido.objects.filter(statusItem = 'p')
     pedidoAndamento = itemPedido.objects.filter(statusItem='a')
     pedidoCancelado = itemPedido.objects.filter(statusItem='c')
-    """
-
 
     context = {
         'prod': produtos,
+        'pedidoP': pedidoPronto,
+        'pedidoA': pedidoAndamento,
+        'pedidoC': pedidoCancelado,
+        'itemPedidos': itemPedido.objects.all(),
     }
 
 
     return render(request, 'cardapio.html', context)
 
-def inserir(request):
+def cozinha(request):
+    pedidoPronto = itemPedido.objects.filter(statusItem = 'p')
+    pedidoAndamento = itemPedido.objects.filter(statusItem='a')
+            
+    context = {
+        'pedidoP': pedidoPronto,
+        'pedidoA': pedidoAndamento,
+        'itemPedidos': itemPedido.objects.all(),
+    }
 
-    #if request.method == 'POST':
-        #form = forms.Inserir(request.POST)
-        #if
+    return render(request, 'cozinha.html', context)
 
-    m = request.POST.get('numeroMesa')
-    mesa.objects.create(numeroMesa = m)
-    
-    #m.save()
+def cozinhaPedidoCancelado(request, id):
+    pedidoC = itemPedido.objects.get(id=id)
+    pedidoC.statusItem = 'c'
+    pedidoC.save()
+    print('alohah cancelado')
+    return redirect(cozinha)
 
-    q = request.POST.get('quantidadeItemPedido')
+def cozinhaPedidoPronto(request, id):
+    pedidoP = itemPedido.objects.get(id=id)
+    pedidoP.statusItem = 'p'
+    pedidoP.save()
+    print('alohah pronto')
+    return redirect(cozinha)
 
-    qtd = request.POST.get('quantidadeItemPedido')
-    itemPedido.objects.create(quantidadeItemPedido = qtd)    
-    
-    itemPedido.objects.create(statusItem = 'e')
-    itemPedido.objects.create(valorItemPedido = qtd)
-    itemPedido.objects.create(pedido_id = 2)
-    itemPedido.objects.create(pessoa_id = 1)
-    itemPedido.objects.create(produto_id = 4)
-    
-    itemPedido.save()
+def retirarItem(request, id):
+    itemPedidos = itemPedido.objects.get(id=id)
+    itemPedidos.delete()
+    return redirect(caixa)
 
-    return render(cardapio)
+def pedidosMesa (request, id):
+    itemPedidosMesa = itemPedido.objects.get(id=id)
+
+    return redirect(caixa)
+
+

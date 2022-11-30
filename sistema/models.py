@@ -11,7 +11,6 @@ class produto(models.Model):
     descicaoProduto = models.CharField('descricao', max_length=90)
     valorUnitario = models.DecimalField('valor', max_digits=8, decimal_places=2)
     categoriaProduto = models.CharField('categoria', max_length=50)
-    
 
 def produto_pre_save(signal, instance, sender, **kwargs):
     instance.slug = slugify(instance.nomeProduto)
@@ -30,14 +29,14 @@ class pessoa(models.Model):
 
 class mesa(models.Model):
     numeroMesa = models.IntegerField('numeroMesa')
-
-
+    
 class pedido(models.Model):
     dataPedido = models.DateField('dataPedido')
     pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
     produto = models.ForeignKey(produto, on_delete=models.CASCADE)
     #Retirar tabela produto
     mesa = models.ForeignKey(mesa, on_delete=models.CASCADE)
+    valor = 0
 
 class itemPedido(models.Model):
     valorItemPedido = models.DecimalField('valorItemPedido', max_digits=8, decimal_places=2)
