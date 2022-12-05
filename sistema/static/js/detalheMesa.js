@@ -1,9 +1,8 @@
-function detalheMesa(){
-    var cardDetalhe = document.querySelector('section.sectionMesaDetalhe')
-    cardDetalhe.style.display = "block"
-}
+function horario() {
+    var hora = document.getElementById('horario')
 
-function detalheMesaOcultar() {
-    var cardDetalhe = document.querySelector('section.sectionMesaDetalhe')
-    cardDetalhe.style.display = "none";
+    console.log(hora.length)
+    for(let contador = 0; contador < hora.length; contador++) {
+        console.log(`ae meu chapa ${hora}`)
+    }
 }

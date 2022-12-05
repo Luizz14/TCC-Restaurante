@@ -15,8 +15,15 @@ header h1 {
 header {
     width: auto;
     height: 3rem;
-    padding: 0.5rem;
-    background: rgb(128, 134, 146);
+    padding: 0.3rem;
+    
+    background: rgb(56, 59, 65);
+    box-shadow: 0px 5px 10px 0px rgba(37, 45, 48, 0.103);
+    backdrop-filter: blur(30px);
+    border-radius: 0rem 0rem 0.5rem 0.5rem;
+    
+    color: rgb(228, 228, 228);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.055);
 }
 
 /* Categorizar */
@@ -25,7 +32,7 @@ header {
     margin-bottom: 0.2rem;
 
     font-size: 1.8rem;
-    color: rgb(78, 84, 95);
+    color: rgb(191, 199, 214);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -144,8 +151,9 @@ header {
 .menu-categorias a {
     text-decoration: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: rgb(204, 202, 198);
+    color: rgb(214, 227, 230);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
 }
 
 /* Nav para alterar entre cardápio e pedidos */
@@ -159,5 +167,5 @@ header {
     margin-top: 1.5rem;
     margin-bottom: 1rem;
 
-    background-color: rgb(199, 181, 158);
+    font-weight: 400;
 }

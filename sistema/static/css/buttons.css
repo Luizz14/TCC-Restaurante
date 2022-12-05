@@ -2,10 +2,11 @@
 /*Button geral*/
 .btnPadrao {
     position: relative;
-    width: 5rem;
-    height: 2.2rem;
+    width: auto;
+    height: auto;
+    /*max-height: 3.2;*/
     margin: 1rem;
-    padding: 0.2rem;
+    padding: 0.6rem;
     bottom: 0px;   
     line-height: initial;
 
@@ -16,6 +17,7 @@
     cursor: pointer;
     transition: transform 0.5s, box-shadow 0.5s, background-color 0.6s;
 
+    font-weight: 300px;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 

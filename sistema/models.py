@@ -29,12 +29,11 @@ class pessoa(models.Model):
 
 class mesa(models.Model):
     numeroMesa = models.IntegerField('numeroMesa')
+    statusMesa = models.CharField('statusMesa', max_length=2)
     
 class pedido(models.Model):
-    dataPedido = models.DateField('dataPedido')
+    dataPedido = models.TimeField('dataHoraPedido')
     pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
-    produto = models.ForeignKey(produto, on_delete=models.CASCADE)
-    #Retirar tabela produto
     mesa = models.ForeignKey(mesa, on_delete=models.CASCADE)
     valor = 0
 

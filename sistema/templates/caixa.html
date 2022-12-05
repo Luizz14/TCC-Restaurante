@@ -16,48 +16,49 @@
     <link rel="stylesheet" href="{% static 'css/pesquisa.css' %}">
     <script src="{% static 'js/detalheMesa.js' %}"></script>
 </head>
-<body class="tela">
+<body class="tela" onload="horario()">
     <!-- Nav Bar -->
     <header>
         <nav class="navbar">
-                <ul class="menu-items">
-                    <li><a href="#">Mesas</a></li>
-                    <li><a href="#">Cozinha</a></li>
-                    <li><a href="#">Cardápio</a></li>
-                    <!-- Pesquisa das mesas -->
-                    <div class="pesquisaMesa">
-                        <input type="search" class="pesquisarMesa" placeholder="Pesquisar Mesa">
-                        <button class="btnPadrao" id="pesquisa"><img src="/static/img/search.png" alt="imgPesquisa"></button>
-                    </div>
-                </ul>
-                <div class="logo">
-                    <img src="/static/img/logo.png" alt="" id="imgLogo">
-                    <h1 class="logo">Restaurante Irineu's</h1>
+            <ul class="menu-items">
+                <li><a href="#">Mesas</a></li>
+                <li><a href="#">Cozinha</a></li>
+                <li><a href="#">Cardápio</a></li>
+                <!-- Pesquisa das mesas -->
+                <div class="pesquisaMesa">
+                    <input type="search" class="pesquisarMesa" placeholder="Pesquisar Mesa">
+                    <button class="btnPadrao" id="pesquisa"><img src="/static/img/search.png" alt="imgPesquisa"></button>
                 </div>
+            </ul>
+            <div class="logo">
+                <img src="/static/img/logo.png" alt="" id="imgLogo">
+                <h1 class="logo">Restaurante Irineu's</h1>
+            </div>
         </nav>
     </header>
-
     <!-- Section das div dos pedidos-->
     <section>
         {% for pedido in pedidos %}
+        {% if pedido.mesa.statusMesa == 'a' %}
         <div class="cardMesa">
             <h1>Mesa</h1>
             <h2>{{ pedido.mesa.numeroMesa }}</h2>
-            <a>Entrada: 00:00</a>
+            <a id="horario">Entrada: {{ pedido.dataPedido }}</a>
             <a>Valor: R$ {{ pedido.valor }}</a>
             <a>Garçom: {{ pedido.pessoa.nome }}</a>
             <a href="#"><button type="button" class="btn btn-primary btnPadrao" data-toggle="modal" data-target="#exampleModalLongTitle{{ pedido.id }}">Detalhes</button></a>
         </div>
+        {% endif %}
         {% endfor %}
     </section>
 
     <!-- Card Mesa Detalhe-->
-    {% for itemPedido in itemPedidos %}
-    <div class="modal fade" id="exampleModalLongTitle{{ itemPedido.pedido.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle{{ pedido.id }}" aria-hidden="true">
+    {% for pedido in pedidos %}
+    <div class="modal fade" id="exampleModalLongTitle{{ pedido.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle{{ pedido.id }}" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Mesa {{ itemPedido.pedido.mesa.numeroMesa }}</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">Mesa {{ pedido.mesa.numeroMesa }}</h5>
               <span class="red box" aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close"></span>
             </div>
             <div class="modal-body">
@@ -71,23 +72,28 @@
                         <tr>
                             <td>
                                 {% for itemPedido in itemPedidos %}
-                                
-                                <h4>{{ itemPedido.produto.nomeProduto }}<a href="{% url 'retirarItem' itemPedido.id %}"><img src="/static/img/xremover.png" alt="img remover pedido"></a></h4>
-                                
-                                {% endfor %}
-
-                            </td>
-                            <td>
-                                {% for itemPedido in itemPedidos %}
-                                <h4>{{ itemPedido.quantidadeItemPedido }}</h4>
+                                {% if itemPedido.pedido.id == pedido.id %}
+                                <h4 style="text-align: justify;">{{ itemPedido.produto.nomeProduto }}<a href="{% url 'retirarItem' itemPedido.id %}"><img src="/static/img/xremover.png" alt="img remover pedido"></a></h4>
+                                <div class="bar"></div>
+                                {% endif %}
                                 {% endfor %}
                             </td>
                             <td>
                                 {% for itemPedido in itemPedidos %}
-                                <h4>R${{ itemPedido.valorItemPedido }}</h4>
+                                {% if itemPedido.pedido.id == pedido.id %}
+                                <h4>{{ itemPedido.quantidadeItemPedido }}x</h4>
+                                <div class="bar"></div>
+                                {% endif %}
                                 {% endfor %}
                             </td>
-                            
+                            <td>
+                                {% for itemPedido in itemPedidos %}
+                                {% if itemPedido.pedido.id == pedido.id %}
+                                <h4>R$ {{ itemPedido.valorItemPedido }}</h4>
+                                <div class="bar"></div>
+                                {% endif %}
+                                {% endfor %}
+                            </td>
                         </tr>
                         <tr>
                             <th><h3>Serviço</h3></th>
@@ -96,19 +102,19 @@
                         </tr>
                         <tr>
                             <td><h4>R$ 5,00</h4></td>
-                            <td><h4>R$ {{ itemPedidos.totalValor }}</h4></td>
+                            <td><h4>R$ </h4></td>
                             <td><h4>R$ {{ total }}</h4></td>
                         </tr>
                         <tr>
                             <td><button class="btnPadrao">Retirar 10%</button></td>
                             <td><button class="btnPadrao">Puxar conta</button></td>
-                            <td><button class="btnPadrao" data-toggle="collapse" href="#pagamentoColapse">Pagar</button></td>
+                            <td><button class="btnPadrao" data-toggle="collapse" href="#pagamentoColapse{{ pedido.id }}">Pagar</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
-                <div  class="collapse pagamento" id="pagamentoColapse">
+                <div  class="collapse pagamento" id="pagamentoColapse{{ pedido.id }}">
                     <table>
                         <tr>
                             <th><h3>Forma de pagamento</h3></th>
@@ -125,7 +131,7 @@
                             <td><input type="text" id="troco"></td>
                         </tr>
                     </table> 
-                    <button class="btnPadrao">Confirmar</button> 
+                    <a href="{% url 'fecharMesa' pedido.id %}"><button class="btnPadrao">Confirmar</button> </a>
                 </div>    
             </div>
           </div>

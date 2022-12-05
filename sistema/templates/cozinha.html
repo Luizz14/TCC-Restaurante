@@ -23,7 +23,7 @@
                     <li><a href="#">Cardápio</a></li>
                 </ul>
                 <div class="logo">
-                    <img src="/img/logo.png" alt="" id="imgLogo">
+                    <img src="/static/img/logo.png" alt="" id="imgLogo">
                     <h1 class="logo">Restaurante Irineu's</h1>
                 </div>
         </nav>
@@ -43,20 +43,15 @@
             <!-- Cards de pedidos -->
             {% for itemPedido in pedidoA %}
             <div class="cardPedido">
-                <form action="{% url 'cozinhaPedidoCancelado' itemPedido.id %}">
-                    {% csrf_token %}
-                    <button class="btnPadrao">Cancelado</button>
-                </form>
-                </form>
+                <div class="tools">
+                    <a href="{% url 'cozinhaPedidoCancelado' itemPedido.id %}"><div class="box red"></div></a>
+                </div>
                 <h1>{{ itemPedido.produto.nomeProduto }}</h1>
                 <h2>Mesa {{ itemPedido.pedido.mesa.numeroMesa }}</h2>
                 <h2>Garçom: {{ itemPedido.pessoa.nome }}</h2>
                 <h2>Quantidade: {{ itemPedido.quantidadeItemPedido }}</h2>
-                <h2>Entrada: {{ itemPedido.pedido.dataPedido }}</h2>
-                <form action="{% url 'cozinhaPedidoPronto' itemPedido.id %}">
-                    {% csrf_token %}
-                    <button class="btnPadrao">Pronto</button>
-                </form>
+                <h2>Entrada: {{ itemPedido.pedido.dataPedido }}</h2>            
+                <a href="{% url 'cozinhaPedidoPronto' itemPedido.id %}"><button class="btnPadrao">Pronto</button></a>
             </div>
             {% endfor %}
         </section>
