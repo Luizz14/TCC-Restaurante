@@ -2,7 +2,7 @@ from django.urls import URLPattern, path, include
 from .views import caixa, cozinha, cardapio, login, cozinhaPedidoPronto, cozinhaPedidoCancelado, retirarItem, esconderPedidoCardapio, addItemPedido, fecharMesa
 
 urlpatterns = [
-    path('login/', login, name='login'),
+    path('', login, name='login'),
     
     path('caixa/', caixa, name='caixa'),
     path('caixa/fecharmesa/<int:id>', fecharMesa, name='fecharMesa'),

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from django.views.generic import RedirectView
+from time import time
 
 from .models import produto, itemPedido, mesa, pessoa, pedido, pagamento
 from decimal import Decimal
@@ -38,15 +39,16 @@ def caixa(request):
 
 def fecharMesa(request, id):
     #Fechamento da mesa
-    for itemPedidos in itemPedido:
-        if itemPedidos <= 0:
+    pedidoId =  pedido.objects.get(id=id)
+    
+    for itemPedidos in itemPedido.objects.all():
+        if itemPedidos.quantidadeItemPedido <= 0:
             pedidoId =  pedido.objects.get(id=id)
             mesaId = pedidoId.mesa
             mesaId.statusMesa = 'f'
             mesaId.save()
-
    
-    pedidoId =  pedido.objects.get(id=id)
+    
     mesaId = pedidoId.mesa
     mesaId.statusMesa = 'f'
 
@@ -71,9 +73,19 @@ def retirarItem(request, id):
         itemPedidos.valorItemPedido = valorItem
 
         itemPedidos.save()
-    else:
+    else:  
         itemPedidos.delete()
-    
+        
+    #Excluir mesa caso não tenha mais nenhum pedido
+    for item in itemPedido.objects.all():
+        mesas = 0 
+        if item.pedido_id == itemPedidos.pedido_id:
+            mesas = mesas + 1
+    if mesas == 1:
+        print(f'oia {mesas}')
+    else:
+        print(f'taporar {mesas}')
+            
     return redirect(caixa)
 
 def cardapio(request):
@@ -120,20 +132,40 @@ def addItemPedido(request, id):
         #Calcular o valor do item pedido
         valorU = valorUni * qtdNumber
 
-        for mesas in mesa.objects.all():
-            if  numMesa == mesas.numeroMesa and mesas.statusMesa == 'a':
-                mesaId = mesas.id
-            else:
-                mesas.numeroMesa = numMesa
-                mesas.statusMesa = 'a'
+        validacaoMesa = False
+        validacaoPedido = False
+
+        while validacaoMesa == False:
+            for mesas in mesa.objects.all():
+                if  numMesa == mesas.numeroMesa and mesas.statusMesa == 'a':
+                    mesaId = mesas.id
+                    validacaoMesa = True
+            
+            if validacaoMesa == False:
+                mesas = mesa(numeroMesa = numMesa, statusMesa = 'a')
 
                 mesas.save()
-                
-                for pedidos in pedido.objects.all():
-                    if mesaId == pedidos.mesa_id:
-                        pedidoId = pedidos.mesa_id
+                print(f'Mesa ae, numMesa{numMesa}, {mesas}')
+                    
+        while validacaoPedido == False:
+            print('passou1')
+            for pedidos in pedido.objects.all():
+                if mesaId == pedidos.mesa_id:
+                    pedidoId = pedidos.id
+                    
+                    print(f'{pedidoId}')
+                    validacaoPedido = True
+
+            if validacaoPedido == False:
+                print('passou3')
+                pedidos = pedido(dataPedido = '21:30', pessoa_id = 1, mesa_id = mesaId)
+
+                print(f'Pedido ae, {pedidos.dataPedido}, {pedidos.mesa_id}')
+
+                pedidos.save()
 
         #Fazer o create no bd
+        print(f'PEDIDO AQ O {pedidoId}')
         item = itemPedido(quantidadeItemPedido = qtd, 
         pedido_id = pedidoId, 
         pessoa_id = 1, 
@@ -143,7 +175,6 @@ def addItemPedido(request, id):
 
         #Salva no bd
         item.save()
-
     #item.pedido.mesa
     return redirect(cardapio)
 
