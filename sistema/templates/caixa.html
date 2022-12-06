@@ -44,7 +44,9 @@
             <h1>Mesa</h1>
             <h2>{{ pedido.mesa.numeroMesa }}</h2>
             <a id="horario">Entrada: {{ pedido.dataPedido }}</a>
-            <a>Valor: R$ {{ pedido.valor }}</a>
+            
+            <a>Valor: R$ {{ calcularMesa.valorTotal }}</a>
+            
             <a>Garçom: {{ pedido.pessoa.nome }}</a>
             <a href="#"><button type="button" class="btn btn-primary btnPadrao" data-toggle="modal" data-target="#exampleModalLongTitle{{ pedido.id }}">Detalhes</button></a>
         </div>

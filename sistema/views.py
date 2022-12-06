@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from django.views.generic import RedirectView
-from time import time
+from datetime import datetime
 
-from .models import produto, itemPedido, mesa, pessoa, pedido, pagamento
+from .models import produto, itemPedido, mesa, pessoa, pedido, pagamento, calcularMesa
 from decimal import Decimal
 
 def login(request):
@@ -24,11 +24,11 @@ def caixa(request):
         #valorItem.save()
 
         #Armazena valor da tabela
-        valorMesas = itemPedidos.pedido.valor
+        valorMesas = calcularMesa.valorTotal
 
         #Calcula o valor total da mesa
         valorMesas = valorMesas + valorItem 
-        #print(f'Valor da Mesa: {valorMesas}')
+        print(f'Valor da Mesa: {valorMesas}')
 
     context = {
         'pedidos': pedido.objects.all(),
@@ -48,7 +48,6 @@ def fecharMesa(request, id):
             mesaId.statusMesa = 'f'
             mesaId.save()
    
-    
     mesaId = pedidoId.mesa
     mesaId.statusMesa = 'f'
 
@@ -78,13 +77,17 @@ def retirarItem(request, id):
         
     #Excluir mesa caso não tenha mais nenhum pedido
     for item in itemPedido.objects.all():
-        mesas = 0 
+        mesaBool = False 
         if item.pedido_id == itemPedidos.pedido_id:
-            mesas = mesas + 1
-    if mesas == 1:
-        print(f'oia {mesas}')
-    else:
-        print(f'taporar {mesas}')
+            mesaBool = True
+            
+    if mesaBool == False:
+        print('passou if mesas')
+        mesaId = itemPedidos.pedido.mesa_id
+        mesaObj = mesa.objects.get(id=mesaId)
+        
+        mesaObj.statusMesa = 'f'
+        mesaObj.save()
             
     return redirect(caixa)
 
@@ -145,10 +148,8 @@ def addItemPedido(request, id):
                 mesas = mesa(numeroMesa = numMesa, statusMesa = 'a')
 
                 mesas.save()
-                print(f'Mesa ae, numMesa{numMesa}, {mesas}')
                     
         while validacaoPedido == False:
-            print('passou1')
             for pedidos in pedido.objects.all():
                 if mesaId == pedidos.mesa_id:
                     pedidoId = pedidos.id
@@ -157,11 +158,10 @@ def addItemPedido(request, id):
                     validacaoPedido = True
 
             if validacaoPedido == False:
-                print('passou3')
-                pedidos = pedido(dataPedido = '21:30', pessoa_id = 1, mesa_id = mesaId)
+                atual = datetime.now()
+                horaAtual = atual.strftime("%H:%M")
 
-                print(f'Pedido ae, {pedidos.dataPedido}, {pedidos.mesa_id}')
-
+                pedidos = pedido(dataPedido = horaAtual, pessoa_id = 1, mesa_id = mesaId)
                 pedidos.save()
 
         #Fazer o create no bd
@@ -180,7 +180,7 @@ def addItemPedido(request, id):
 
 def cozinha(request):
     pedidoPronto = itemPedido.objects.filter(statusItem = 'p')
-    pedidoAndamento = itemPedido.objects.filter(statusItem='a')
+    pedidoAndamento = itemPedido.objects.filter(statusItem ='a')
             
     context = {
         'pedidoP': pedidoPronto,
@@ -196,7 +196,7 @@ def cozinhaPedidoCancelado(request, id):
     #Altera o status do item para cancelado
     pedidoC.statusItem = 'c'
     pedidoC.save()
-    print('alohah cancelado')
+    
     return redirect(cozinha)
 
 def cozinhaPedidoPronto(request, id):
@@ -205,7 +205,7 @@ def cozinhaPedidoPronto(request, id):
     #Altera o status do item para pronto
     pedidoP.statusItem = 'p'
     pedidoP.save()
-    print('alohah pronto')
+    
     return redirect(cozinha)
 
 

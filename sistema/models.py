@@ -53,3 +53,10 @@ class pagamento(models.Model):
     pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
     produto = models.ForeignKey(produto, on_delete=models.CASCADE)
     mesa = models.ForeignKey(mesa, on_delete=models.CASCADE)
+
+class calcularMesa:
+    pedido_id = 0
+    valorTotal = 0
+    valorPorcento = 0
+    subTotal = 0
+    
