@@ -63,6 +63,10 @@ table {
     backdrop-filter: blur(10px);
 }
 
+.modal-header {
+    border-bottom: 0px;
+}
+
 .modal-title {
     margin-bottom: 0rem;
     justify-content: center;
@@ -83,12 +87,10 @@ table {
     border-radius: 45px;
     opacity: 0.85;
 
-    margin: auto;
-    margin-top: 5rem;
     padding: 2rem;
 
     backdrop-filter: blur(15px);
-    background-color: rgb(36, 50, 71);
+    background-color: rgb(4, 20, 34, 1);
 }
 
 .modal-body h3 {
@@ -120,9 +122,13 @@ table {
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+.modal-footer {
+    border-top: 0px;
+}
+
 /* Pagamento */
 .pagamento option {
-    background-color: rgba(14, 94, 110, 0.568);
+    background-color: rgb(36, 50, 71);
     
     font-size: 1.2rem;
     color: rgb(209, 213, 226);
@@ -136,7 +142,7 @@ table {
     max-width: 7rem;
     height: auto;
 
-    background-color: rgba(14, 94, 110, 0);
+    background-color: rgba(36, 50, 71, 0.048);
     margin: auto;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -160,7 +166,7 @@ table {
     border: none;
     outline: none;
     
-    background-color: rgb(128, 134, 146);
+    background-color: rgb(52, 56, 65);
     border-radius: 18px;
 
     transition: box-shadow 0.6s;
@@ -196,4 +202,81 @@ table {
     background-color: rgba(30, 43, 54, 0.452);
     border-radius: 2rem;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.144);
+}
+
+/* Form para add produto */
+.addProdItem {
+    width: auto;
+    height: auto;
+    margin: auto;
+
+    opacity: 0.85;
+}
+
+.addProdItem input {
+    width: 9rem;
+    height: 2.2rem;
+    margin: 1rem;
+    padding: 0.2rem;
+    border: none;
+    outline: none;
+    
+    background-color: rgb(52, 56, 65);
+    border-radius: 18px;
+
+    transition: box-shadow 0.6s;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+    
+    color: rgb(217, 225, 233);
+    text-align: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.addProdItem input:hover {
+    outline: none;
+}
+
+.addProdItem label {
+    margin: 0.2rem;
+    width: 10.8rem;
+
+    font-size: 1.3rem;
+    color: rgb(199 220 239);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.addProdItem option {
+    background-color: rgb(36, 50, 71);
+    
+    font-size: 1.2rem;
+    color: rgb(209, 213, 226);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.addProdItem select {
+    min-width: 5rem;
+    width: auto;
+    max-width: 7rem;
+    height: auto;
+
+    background-color: rgba(36, 50, 71, 0.048);
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    font-size: 1.2rem;
+    color: rgb(209, 213, 226);
+    border: none;
+
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.addProdItem select:focus {
+    border: none;
+    outline: none;
 }

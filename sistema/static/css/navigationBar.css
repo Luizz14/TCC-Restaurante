@@ -27,10 +27,31 @@
   height: 3rem;
 }
 
+.nav-link {
+  display: initial;
+  padding: 0;
+}
+
+.dropdown-menu {
+  background-color: rgb(56, 59, 65);
+  border-radius: 1.5rem;
+}
+
+.dropdown-menu a:hover{
+  background-color: transparent;
+}
+
+.dropdown-item {
+  padding: 0rem 1rem 0rem 0rem;
+}
+
+a.dropdown-item {
+  margin-bottom: 0.4rem;
+}
+
 .menu-items {
   width: auto;
   height: 4rem;
-  overflow: hidden;
   order: 2;
   display: flex;
   
@@ -78,7 +99,7 @@
   margin-bottom: 1.5rem;
 
   font-family: 'IM Fell Great Primer', serif;
-  color: rgb(228, 228, 228);
+  color: rgb(228, 228, 228)!important;
 }
 
 img {

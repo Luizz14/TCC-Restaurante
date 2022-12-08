@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
     <link rel="stylesheet" href="{% static 'css/cardapio.css' %}">
     <script src="{% static 'js/pedidoStatus.js' %}"></script>
+    <script src="{% static 'js/validacao.js' %}"></script>
 </head>
 <body class="tela" onload="pedidoStatus()">
     <!-- Titulo da pagina -->
@@ -55,10 +56,10 @@
                         <form action="{% url 'addItemPedido' produto.id %}" method="post" autocomplete="off">
                             {% csrf_token %}
                             <label for="">Mesa: </label>
-                            <input type="text" name="numeroMesa">
+                            <input type="text" name="numeroMesa" required>
                             <label for="{{ form.quantidadeItemPedido.id_for_label }}">Quantidade: </label>
-                            <input type="number" name="quantidadeItemPedido" value="1">
-                            <button id="adicionarProd" class="btnPadrao" type="submit">Adicionar</button>
+                            <input id="quantidadeItemPedido" type="number" name="quantidadeItemPedido" value="1" required>
+                            <button id="adicionarProd" class="btnPadrao" type="submit" onclick="vAddPedido(this); return false;">Adicionar</button>
                         </form>
                     </div>
                 </div>

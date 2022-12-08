@@ -28,11 +28,12 @@ def caixa(request):
 
         #Calcula o valor total da mesa
         valorMesas = valorMesas + valorItem 
-        print(f'Valor da Mesa: {valorMesas}')
+        #print(f'Valor da Mesa: {valorMesas}')
 
     context = {
         'pedidos': pedido.objects.all(),
         'itemPedidos': itemPedido.objects.all(),
+        'produtos': produto.objects.all(),
     }
 
     return render(request, 'caixa.html', context)
@@ -82,13 +83,31 @@ def retirarItem(request, id):
             mesaBool = True
             
     if mesaBool == False:
-        print('passou if mesas')
         mesaId = itemPedidos.pedido.mesa_id
         mesaObj = mesa.objects.get(id=mesaId)
         
         mesaObj.statusMesa = 'f'
         mesaObj.save()
             
+    return redirect(caixa)
+
+def addProduto(request):
+    nomeProd = request.POST['nomeProdInput']
+    descProd = request.POST['descProduto']
+    valorProd = request.POST['valorProduto']
+    categoriaProd = request.POST['categoriaProd']
+    print(f'Nome do produto: {nomeProd}')
+    print(f'Desc do produto: {descProd}')
+    print(f'Valor do produto: {valorProd}')
+
+
+    prod = produto(nomeProduto = nomeProd, 
+    descicaoProduto = descProd, 
+    valorUnitario = float(valorProd),
+    categoriaProduto = categoriaProd)
+
+    prod.save()
+
     return redirect(caixa)
 
 def cardapio(request):
@@ -99,10 +118,10 @@ def cardapio(request):
     context = {
         'produtos': produto.objects.all(),
         'prod': produto.objects.all(),
+        'itemPedidos': itemPedido.objects.all(),
         'pedidoP': pedidoPronto,
         'pedidoA': pedidoAndamento,
         'pedidoC': pedidoCancelado,
-        'itemPedidos': itemPedido.objects.all(),
     }
 
     return render(request, 'cardapio.html', context)
@@ -112,6 +131,7 @@ def esconderPedidoCardapio(request, id):
     esc = itemPedido.objects.get(id=id)
     #Altera o status do item pedido para l, para não aparecer na listagem
     esc.statusItem = 'l'
+    
     esc.save()
 
     return redirect(cardapio)
@@ -154,7 +174,6 @@ def addItemPedido(request, id):
                 if mesaId == pedidos.mesa_id:
                     pedidoId = pedidos.id
                     
-                    print(f'{pedidoId}')
                     validacaoPedido = True
 
             if validacaoPedido == False:
@@ -165,7 +184,7 @@ def addItemPedido(request, id):
                 pedidos.save()
 
         #Fazer o create no bd
-        print(f'PEDIDO AQ O {pedidoId}')
+        
         item = itemPedido(quantidadeItemPedido = qtd, 
         pedido_id = pedidoId, 
         pessoa_id = 1, 
@@ -175,7 +194,7 @@ def addItemPedido(request, id):
 
         #Salva no bd
         item.save()
-    #item.pedido.mesa
+    
     return redirect(cardapio)
 
 def cozinha(request):
@@ -195,6 +214,7 @@ def cozinhaPedidoCancelado(request, id):
     pedidoC = itemPedido.objects.get(id=id)
     #Altera o status do item para cancelado
     pedidoC.statusItem = 'c'
+
     pedidoC.save()
     
     return redirect(cozinha)
@@ -204,6 +224,7 @@ def cozinhaPedidoPronto(request, id):
     pedidoP = itemPedido.objects.get(id=id)
     #Altera o status do item para pronto
     pedidoP.statusItem = 'p'
+    
     pedidoP.save()
     
     return redirect(cozinha)

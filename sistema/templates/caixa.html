@@ -21,9 +21,21 @@
     <header>
         <nav class="navbar">
             <ul class="menu-items">
-                <li><a href="#">Mesas</a></li>
-                <li><a href="#">Cozinha</a></li>
-                <li><a href="#">Cardápio</a></li>
+                <li><a href="{% url 'caixa' %}">Mesas</a></li>
+                <li><a href="{% url 'cozinha' %}">Cozinha</a></li>
+                <li><a href="{% url 'cardapio' %}">Cardápio</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                      Opções
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleProduto">Adicionar produto</a></li>
+                      <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleFuncionario">Cadastrar funcionário</a></li>
+                      <li><a class="dropdown-item" href="#">Mudar mesa</a></li>
+                      <div class="dropdown-divider"></div>
+                      <li><a class="dropdown-item" href="#">Encerrar dia</a></li>
+                    </ul>
+                  </li>
                 <!-- Pesquisa das mesas -->
                 <div class="pesquisaMesa">
                     <input type="search" class="pesquisarMesa" placeholder="Pesquisar Mesa">
@@ -36,6 +48,86 @@
             </div>
         </nav>
     </header>
+
+    <!-- Cadastro -->
+    <div class="modal fade" id="exampleModalLongTitleProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleProduto" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitleProduto">Cadastrar produto</h5>
+                <span class="red box" aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close"></span>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addProduto' %}" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="addProdItem">
+                        <label for="nomeProd">Nome</label>
+                        <input type="text" name="nomeProdInput" required>
+                        <div class="bar"></div>
+    
+                        <label for="valorProd">Descrição</label>
+                        <input type="text" name="descProduto" required>
+                        <div class="bar"></div>
+    
+                        <label for="valorProd">Valor unitário</label>
+                        <input type="text" name="valorProduto" required>
+                        <div class="bar"></div>
+    
+                        <label for="valorProd">Categoria</label>
+                        <select name="categoriaProd" id="categoriaProd" required>
+                            {% for produto in produtos %}
+                            <option value="{{ produto.categoriaProduto }}">{{ produto.categoriaProduto }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="bar"></div>
+    
+                        <button class="btnPadrao" type="submit">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalLongTitleFuncionario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleFuncionario" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitleFuncionario">Cadastrar funcionário</h5>
+                <span class="red box" aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close"></span>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addProduto' %}" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="addProdItem">
+                        <label for="nomeProd">Nome</label>
+                        <input type="text" name="nomeFuncionario" required>
+                        <div class="bar"></div>
+    
+                        <label for="valorProd">cpf</label>
+                        <input type="text" name="cpfFuncionario" required>
+                        <div class="bar"></div>
+    
+                        <label for="valorProd">Senha</label>
+                        <input type="text" name="senhaFuncionario" required>
+                        <div class="bar"></div>
+    
+                        <label for="valorProd">telefone</label>
+                        <input type="text" name="telefoneFuncionario" required>
+                        <div class="bar"></div>
+    
+                        <label for="valorProd">Função</label>
+                        <input type="text" name="tipoFuncionario" required>
+                        <div class="bar"></div>
+
+                        <button class="btnPadrao" type="submit">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Section das div dos pedidos-->
     <section>
         {% for pedido in pedidos %}
@@ -53,7 +145,6 @@
         {% endif %}
         {% endfor %}
     </section>
-
     <!-- Card Mesa Detalhe-->
     {% for pedido in pedidos %}
     <div class="modal fade" id="exampleModalLongTitle{{ pedido.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle{{ pedido.id }}" aria-hidden="true">

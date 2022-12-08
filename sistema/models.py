@@ -5,7 +5,6 @@ from stdimage.models import StdImageField
 from django.db.models import signals
 from django.template.defaultfilters import slugify
 
-
 class produto(models.Model): 
     nomeProduto = models.CharField('nome', max_length=45)
     descicaoProduto = models.CharField('descricao', max_length=90)
