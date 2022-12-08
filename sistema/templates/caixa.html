@@ -49,7 +49,7 @@
         </nav>
     </header>
 
-    <!-- Cadastro -->
+    <!-- Cadastro Produto -->
     <div class="modal fade" id="exampleModalLongTitleProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleProduto" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -88,7 +88,7 @@
             </div>
         </div>
     </div>
-
+    <!-- Cadastro Funcionário -->
     <div class="modal fade" id="exampleModalLongTitleFuncionario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleFuncionario" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -97,7 +97,7 @@
                 <span class="red box" aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close"></span>
             </div>
             <div class="modal-body">
-                <form action="{% url 'addProduto' %}" method="post" autocomplete="off">
+                <form action="{% url 'addFuncionario' %}" method="post" autocomplete="off">
                     {% csrf_token %}
                     <div class="addProdItem">
                         <label for="nomeProd">Nome</label>

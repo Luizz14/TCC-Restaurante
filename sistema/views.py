@@ -96,10 +96,6 @@ def addProduto(request):
     descProd = request.POST['descProduto']
     valorProd = request.POST['valorProduto']
     categoriaProd = request.POST['categoriaProd']
-    print(f'Nome do produto: {nomeProd}')
-    print(f'Desc do produto: {descProd}')
-    print(f'Valor do produto: {valorProd}')
-
 
     prod = produto(nomeProduto = nomeProd, 
     descicaoProduto = descProd, 
@@ -107,6 +103,23 @@ def addProduto(request):
     categoriaProduto = categoriaProd)
 
     prod.save()
+
+    return redirect(caixa)
+
+def addFuncionario(request):
+    nomeFunc = request.POST['nomeFuncionario']
+    cpfFunc = request.POST['cpfFuncionario']
+    senhaFunc = request.POST['senhaFuncionario']
+    telefoneFunc = request.POST['telefoneFuncionario']
+    funcaoFunc = request.POST['tipoFuncionario']
+
+    func = pessoa(nome = nomeFunc, 
+    cpf = cpfFunc, 
+    senha = senhaFunc, 
+    telefone = int(telefoneFunc), 
+    tipo = funcaoFunc)
+
+    func.save()
 
     return redirect(caixa)
 

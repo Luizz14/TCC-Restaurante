@@ -5,11 +5,14 @@ from stdimage.models import StdImageField
 from django.db.models import signals
 from django.template.defaultfilters import slugify
 
+class categoriaProduto(models.Model):
+    nomeCategoria = models.CharField('nome', max_length=50)
+
 class produto(models.Model): 
     nomeProduto = models.CharField('nome', max_length=45)
-    descicaoProduto = models.CharField('descricao', max_length=90)
+    descricaoProduto = models.CharField('descricao', max_length=90)
     valorUnitario = models.DecimalField('valor', max_digits=8, decimal_places=2)
-    categoriaProduto = models.CharField('categoria', max_length=50)
+    categoriaProduto = models.ForeignKey(categoriaProduto, on_delete=models.CASCADE)
 
 def produto_pre_save(signal, instance, sender, **kwargs):
     instance.slug = slugify(instance.nomeProduto)
