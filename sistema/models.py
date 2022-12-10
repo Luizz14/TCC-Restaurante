@@ -5,14 +5,14 @@ from stdimage.models import StdImageField
 from django.db.models import signals
 from django.template.defaultfilters import slugify
 
-class categoriaProduto(models.Model):
+class categoria(models.Model):
     nomeCategoria = models.CharField('nome', max_length=50)
 
 class produto(models.Model): 
     nomeProduto = models.CharField('nome', max_length=45)
     descricaoProduto = models.CharField('descricao', max_length=90)
     valorUnitario = models.DecimalField('valor', max_digits=8, decimal_places=2)
-    categoriaProduto = models.ForeignKey(categoriaProduto, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(categoria, on_delete=models.CASCADE)
 
 def produto_pre_save(signal, instance, sender, **kwargs):
     instance.slug = slugify(instance.nomeProduto)
@@ -46,6 +46,11 @@ class itemPedido(models.Model):
     pedido = models.ForeignKey(pedido, on_delete=models.CASCADE)
     produto = models.ForeignKey(produto, on_delete=models.CASCADE)
     pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
+
+    def calcularMesa(self):
+        return self.quantidadeItemPedido * self.produto.valorUnitario
+
+
 
 class pagamento(models.Model):
     formaPagamento = models.CharField('formaPagamento', max_length=1)

@@ -30,10 +30,11 @@
                     </a>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleProduto">Adicionar produto</a></li>
+                      <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleCategoria">Adicionar categoria</a></li>
                       <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleFuncionario">Cadastrar funcionário</a></li>
-                      <li><a class="dropdown-item" href="#">Mudar mesa</a></li>
+                      <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleMesa">Mudar mesa</a></li>
                       <div class="dropdown-divider"></div>
-                      <li><a class="dropdown-item" href="#">Encerrar dia</a></li>
+                      <li><a class="dropdown-item" href="#">Encerrar o dia</a></li>
                     </ul>
                   </li>
                 <!-- Pesquisa das mesas -->
@@ -75,12 +76,11 @@
     
                         <label for="valorProd">Categoria</label>
                         <select name="categoriaProd" id="categoriaProd" required>
-                            {% for produto in produtos %}
-                            <option value="{{ produto.categoriaProduto }}">{{ produto.categoriaProduto }}</option>
+                            {% for categoria in categorias %}
+                            <option value="{{ categoria.id }}">{{ categoria.nomeCategoria }}</option>
                             {% endfor %}
                         </select>
                         <div class="bar"></div>
-    
                         <button class="btnPadrao" type="submit">Confirmar</button>
                     </div>
                 </form>
@@ -116,10 +116,63 @@
                         <input type="text" name="telefoneFuncionario" required>
                         <div class="bar"></div>
     
-                        <label for="valorProd">Função</label>
-                        <input type="text" name="tipoFuncionario" required>
+                        <label for="tipoFuncionario">Função</label>
+                        <select name="tipoFuncionario" id="tipoFuncionario" required>
+                            <option value="c">Caixa</option>
+                            <option value="z">Cozinheiro</option>
+                            <option value="g">Garçom</option>
+                            <option value="a">Administrador</option>
+                        </select>
                         <div class="bar"></div>
 
+                        <button class="btnPadrao" type="submit">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cadastro Categoria -->
+    <div class="modal fade" id="exampleModalLongTitleCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleCategoria" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitleCategoria">Cadastrar categoria</h5>
+                <span class="red box" aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close"></span>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addCategoria' %}" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="addProdItem">
+                        <label for="nomeCategoria">Nome</label>
+                        <input type="text" name="nomeCategoria" required>
+                        <div class="bar"></div>
+                        <button class="btnPadrao" type="submit">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alterar mesa -->
+    <div class="modal fade" id="exampleModalLongTitleMesa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleMesa" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitleMesa">Alterar mesa</h5>
+                <span class="red box" aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close"></span>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'alterarMesa' %}" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="addProdItem">
+                        <label for="numAtual">Número atual da mesa:</label>
+                        <input type="text" name="numAtual" required>
+                        <div class="bar"></div>
+                        <label for="numFuturo">Número futuro da mesa:</label>
+                        <input type="text" name="numFuturo" required>
+                        <div class="bar"></div>
                         <button class="btnPadrao" type="submit">Confirmar</button>
                     </div>
                 </form>
@@ -135,10 +188,12 @@
         <div class="cardMesa">
             <h1>Mesa</h1>
             <h2>{{ pedido.mesa.numeroMesa }}</h2>
-            <a id="horario">Entrada: {{ pedido.dataPedido }}</a>
-            
-            <a>Valor: R$ {{ calcularMesa.valorTotal }}</a>
-            
+            <a id="horario" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                Entrada: {{ pedido.dataPedido }}
+            </a>
+            <a style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                Valor: R$ {{ calcularMesa.valorTotal }}
+            </a>
             <a>Garçom: {{ pedido.pessoa.nome }}</a>
             <a href="#"><button type="button" class="btn btn-primary btnPadrao" data-toggle="modal" data-target="#exampleModalLongTitle{{ pedido.id }}">Detalhes</button></a>
         </div>
@@ -165,26 +220,26 @@
                         <tr>
                             <td>
                                 {% for itemPedido in itemPedidos %}
-                                {% if itemPedido.pedido.id == pedido.id %}
-                                <h4 style="text-align: justify;">{{ itemPedido.produto.nomeProduto }}<a href="{% url 'retirarItem' itemPedido.id %}"><img src="/static/img/xremover.png" alt="img remover pedido"></a></h4>
-                                <div class="bar"></div>
-                                {% endif %}
+                                    {% if itemPedido.pedido.id == pedido.id %}
+                                        <h4 style="text-align: justify;">{{ itemPedido.produto.nomeProduto }}<a href="{% url 'retirarItem' itemPedido.id %}"><img src="/static/img/xremover.png" alt="img remover pedido"></a></h4>
+                                        <div class="bar"></div>
+                                    {% endif %}
                                 {% endfor %}
                             </td>
                             <td>
                                 {% for itemPedido in itemPedidos %}
-                                {% if itemPedido.pedido.id == pedido.id %}
-                                <h4>{{ itemPedido.quantidadeItemPedido }}x</h4>
-                                <div class="bar"></div>
-                                {% endif %}
+                                    {% if itemPedido.pedido.id == pedido.id %}
+                                        <h4>{{ itemPedido.quantidadeItemPedido }}x</h4>
+                                        <div class="bar"></div>
+                                    {% endif %}
                                 {% endfor %}
                             </td>
                             <td>
                                 {% for itemPedido in itemPedidos %}
-                                {% if itemPedido.pedido.id == pedido.id %}
-                                <h4>R$ {{ itemPedido.valorItemPedido }}</h4>
-                                <div class="bar"></div>
-                                {% endif %}
+                                    {% if itemPedido.pedido.id == pedido.id %}
+                                        <h4>R$ {{ itemPedido.valorItemPedido }}</h4>
+                                        <div class="bar"></div>
+                                    {% endif %}
                                 {% endfor %}
                             </td>
                         </tr>
@@ -196,7 +251,11 @@
                         <tr>
                             <td><h4>R$ 5,00</h4></td>
                             <td><h4>R$ </h4></td>
-                            <td><h4>R$ {{ total }}</h4></td>
+                            {% for valorMesa in valoresMesas %}
+                                {% if valorMesa.idPedido == pedido.id %}
+                                    <td><h4>R$ {{ valorMesa.valorTotalMesa }}</h4></td>
+                                {% endif %}
+                            {% endfor %}
                         </tr>
                         <tr>
                             <td><button class="btnPadrao">Retirar 10%</button></td>

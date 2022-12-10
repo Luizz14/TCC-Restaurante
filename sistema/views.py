@@ -3,7 +3,7 @@ from django.views.generic import CreateView
 from django.views.generic import RedirectView
 from datetime import datetime
 
-from .models import produto, itemPedido, mesa, pessoa, pedido, pagamento, calcularMesa
+from .models import produto, itemPedido, mesa, pessoa, pedido, pagamento, calcularMesa, categoria
 from decimal import Decimal
 
 def login(request):
@@ -11,29 +11,37 @@ def login(request):
 
 def caixa(request):
     #if itemPedidos == itemPedidos.
-    
-    #Calcular o valor da mesa:
-    for itemPedidos in itemPedido.objects.all():
-        qtd = itemPedidos.quantidadeItemPedido
-        prod = itemPedidos.produto.valorUnitario
-        valorItem = itemPedidos.valorItemPedido
+    valoresMesas = [{}]
 
-        #Calcula o valor total dos item pedidos
-        valorItem = qtd * prod
+    #Calcular o valor da mesa:
+    for objItemPedido in itemPedido.objects.all():
+        #Calcula o valor total da mesa
+        valorMesa = { 
+            'idPedido': objItemPedido.pedido.id, 
+            'valorTotalMesa': objItemPedido.calcularMesa() 
+        }
+
+        valoresMesas.append(valorMesa)
+        #print(f'Valor da Mesa: {valoresMesas}')
+
+        # qtd = itemPedidos.quantidadeItemPedido
+        # prod = itemPedidos.produto.valorUnitario
+        # valorItem = itemPedidos.valorItemPedido
+
+        # #Calcula o valor total dos item pedidos
+        # valorItem = qtd * prod
         #print(f'Valor Item: {valorItem}')
         #valorItem.save()
 
-        #Armazena valor da tabela
-        valorMesas = calcularMesa.valorTotal
-
-        #Calcula o valor total da mesa
-        valorMesas = valorMesas + valorItem 
-        #print(f'Valor da Mesa: {valorMesas}')
+        # #Armazena valor da tabela
+        # valoresMesas = calcularMesa.valorTotal
 
     context = {
         'pedidos': pedido.objects.all(),
         'itemPedidos': itemPedido.objects.all(),
         'produtos': produto.objects.all(),
+        'categorias': categoria.objects.all(),
+        'valoresMesas': valoresMesas,
     }
 
     return render(request, 'caixa.html', context)
@@ -98,9 +106,9 @@ def addProduto(request):
     categoriaProd = request.POST['categoriaProd']
 
     prod = produto(nomeProduto = nomeProd, 
-    descicaoProduto = descProd, 
+    descricaoProduto = descProd, 
     valorUnitario = float(valorProd),
-    categoriaProduto = categoriaProd)
+    categoria_id = int(categoriaProd))
 
     prod.save()
 
@@ -123,6 +131,27 @@ def addFuncionario(request):
 
     return redirect(caixa)
 
+def addCategoria(request):
+    nomeCat = request.POST['nomeCategoria']
+    cat = categoria(nomeCategoria = nomeCat)
+    cat.save()
+
+    return redirect(caixa)
+
+def alterarMesa(request):
+    numeroMesa = request.POST['numAtual']
+    proxNumeroMesa = request.POST['numFuturo']
+
+    for mesas in mesa.objects.all():
+        if int(numeroMesa) == mesas.numeroMesa and mesas.statusMesa == 'a':
+            
+            mesas.numeroMesa = int(proxNumeroMesa)
+            mesas.save()
+
+    return redirect(caixa)
+
+
+
 def cardapio(request):
     pedidoPronto = itemPedido.objects.filter(statusItem = 'p')
     pedidoAndamento = itemPedido.objects.filter(statusItem='a')
@@ -130,8 +159,8 @@ def cardapio(request):
 
     context = {
         'produtos': produto.objects.all(),
-        'prod': produto.objects.all(),
         'itemPedidos': itemPedido.objects.all(),
+        'categorias': categoria.objects.all(),
         'pedidoP': pedidoPronto,
         'pedidoA': pedidoAndamento,
         'pedidoC': pedidoCancelado,

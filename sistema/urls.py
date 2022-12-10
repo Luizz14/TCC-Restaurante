@@ -1,5 +1,5 @@
 from django.urls import URLPattern, path, include
-from .views import caixa, cozinha, cardapio, login, cozinhaPedidoPronto, cozinhaPedidoCancelado, retirarItem, esconderPedidoCardapio, addItemPedido, fecharMesa, addProduto, addFuncionario
+from .views import caixa, cozinha, cardapio, login, cozinhaPedidoPronto, cozinhaPedidoCancelado, retirarItem, esconderPedidoCardapio, addItemPedido, fecharMesa, addProduto, alterarMesa, addFuncionario, addCategoria
 
 urlpatterns = [
     path('', login, name='login'),
@@ -8,7 +8,9 @@ urlpatterns = [
     path('caixa/fecharmesa/<int:id>', fecharMesa, name='fecharMesa'),
     path('caixa/retiraritem/<int:id>', retirarItem, name='retirarItem'),
     path('caixa/addProduto/', addProduto, name='addProduto'),
+    path('caixa/addCategoria/', addCategoria, name='addCategoria'),
     path('caixa/addFuncionario/', addFuncionario, name='addFuncionario'),
+    path('caixa/alterarMesa/', alterarMesa, name='alterarMesa'),
 
     path('cozinha/', cozinha, name='cozinha'),
     path('cozinha/pedidopronto/<int:id>/', cozinhaPedidoPronto, name='cozinhaPedidoPronto'),

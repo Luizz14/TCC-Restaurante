@@ -32,24 +32,24 @@
         <section class="tab-pane fade show active" id="pills-cardapio" role="tabpanel" aria-labelledby="pills-cardapio-tab">
             <!-- Menu para as categorias -->
             <ul class="menu-categorias">
-                {% for produto in prod %}
-                <li><a href="#{{ produto.categoriaProduto }}">{{ produto.categoriaProduto }}</a></li>
+                {% for categoria in categorias %}
+                <li><a href="#{{ categoria.nomeCategoria }}">{{ categoria.nomeCategoria }}</a></li>
                 {% endfor %}
             </ul>
             <!-- Sessao de categorias -->
-            {% for produto in prod %}
+            {% for categoria in categorias %}
             <section class="categoria" id="{{ produto.categoriaProduto }}">
                 <!-- Nome da categoria -->
                 <div>
-                    <h1>{{ produto.categoriaProduto }}</h1>
+                    <h1>{{ categoria.nomeCategoria }}</h1>
                     <div class="bar"></div>
                 </div>
                 <!-- Card produtos -->
                 {% for produto in produtos %}
-                {% if produtos.categoriaProduto == prod.categoriaProduto %}
+                {% if produto.categoria_id == categoria.id %}
                 <div class="cardProduto">
                     <h1 data-toggle="collapse" href="#colapse{{ produto.id }}">{{ produto.nomeProduto }}</h1>
-                    <h2>{{ produto.descicaoProduto }} </h2>
+                    <h2>{{ produto.descricaoProduto }} </h2>
                     <h2>R${{ produto.valorUnitario }}</h2>
                     <!-- Div colapse para recolher a div -->
                     <div class="collapse" id="colapse{{ produto.id }}">

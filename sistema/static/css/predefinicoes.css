@@ -6,6 +6,7 @@ body {
 }
 
 .tela {
-    background-color: rgb(28, 28, 30);
+    /* background-color: rgb(28, 28, 30); */
+    background-color: #252525;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
