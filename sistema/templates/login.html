@@ -11,14 +11,15 @@
     <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
 </head>
 <body>
-    <form action="#">
+    <form action="{% url 'autenticacao'%}" method="post" autocomplete="off">
+        {% csrf_token %}
         <div class="cardLogin">
             <h1>Login</h1>
             <label for="usuario">Usuário</label>
             <input type="text" name="usuario">
             <label for="senha">Senha</label>
             <input type="password" name="senha">
-            <button class="btnPadrao">Entrar</button>
+            <button class="btnPadrao" type="submit">Entrar</button>
         </div>
     </form>
 </body>

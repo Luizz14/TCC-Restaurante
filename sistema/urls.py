@@ -1,14 +1,14 @@
 from django.urls import URLPattern, path, include
-from .views import caixa, cozinha, cardapio, login, cozinhaPedidoPronto, cozinhaPedidoCancelado, retirarItem, esconderPedidoCardapio, addItemPedido, fecharMesa, addProduto, alterarMesa, addFuncionario, addCategoria, retirarServico
-from .caixa.views import listarTodosPedidos, listarPedidosPor
+from .views.login import loginT, autenticacao
+from .views.caixa import caixa, fecharMesa, retirarItem, addProduto, addCategoria, addFuncionario, alterarMesa, retirarServico, encerrarDia
+from .views.cozinha import cozinha, cozinhaPedidoPronto, cozinhaPedidoCancelado
+from .views.cardapio import cardapio, esconderPedidoCardapio, addItemPedido
 
 urlpatterns = [
-    path('', login, name='login'),
-    path('caixa/', caixa, name='caixa'),
-    
-    path('listarTodosPedidos/', listarTodosPedidos, name='pao'),
-    path('listarPedidosPor/', listarPedidosPor, name='pao'),
+    path('', loginT, name='loginT'),
+    path('autenticacao/', autenticacao, name='autenticacao'),
 
+    path('caixa/', caixa, name='caixa'),
     path('caixa/fecharmesa/<int:id>', fecharMesa, name='fecharMesa'),
     path('caixa/retiraritem/<int:id>', retirarItem, name='retirarItem'),
     path('caixa/addProduto/', addProduto, name='addProduto'),
@@ -16,6 +16,7 @@ urlpatterns = [
     path('caixa/addFuncionario/', addFuncionario, name='addFuncionario'),
     path('caixa/alterarMesa/', alterarMesa, name='alterarMesa'),
     path('caixa/retirarServico/<int:id>', retirarServico, name='retirarServico'),
+    path('caixa/encerrarDia', encerrarDia, name='encerrarDia'),
 
     path('cozinha/', cozinha, name='cozinha'),
     path('cozinha/pedidopronto/<int:id>/', cozinhaPedidoPronto, name='cozinhaPedidoPronto'),

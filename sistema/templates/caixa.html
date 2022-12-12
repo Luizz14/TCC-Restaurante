@@ -16,14 +16,11 @@
     <link rel="stylesheet" href="{% static 'css/pesquisa.css' %}">
     <script src="{% static 'js/detalheMesa.js' %}"></script>
 </head>
-<body class="tela" onload="horario()">
+<body class="tela">
     <!-- Nav Bar -->
     <header>
         <nav class="navbar">
             <ul class="menu-items">
-                <li><a href="{% url 'caixa' %}">Mesas</a></li>
-                <li><a href="{% url 'cozinha' %}">Cozinha</a></li>
-                <li><a href="{% url 'cardapio' %}">Cardápio</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                       Opções
@@ -34,14 +31,12 @@
                       <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleFuncionario">Cadastrar funcionário</a></li>
                       <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleMesa">Mudar mesa</a></li>
                       <div class="dropdown-divider"></div>
-                      <li><a class="dropdown-item" href="#">Encerrar o dia</a></li>
+                      <li><a class="dropdown-item" href="{% url 'encerrarDia' %}">Encerrar o dia</a></li>
                     </ul>
                   </li>
-                <!-- Pesquisa das mesas -->
-                <div class="pesquisaMesa">
-                    <input type="search" class="pesquisarMesa" placeholder="Pesquisar Mesa">
-                    <button class="btnPadrao" id="pesquisa"><img src="/static/img/search.png" alt="imgPesquisa"></button>
-                </div>
+                <li><a href="{% url 'caixa' %}">Mesas</a></li>
+                <li><a href="{% url 'cozinha' %}">Cozinha</a></li>
+                <li><a href="{% url 'cardapio' %}">Cardápio</a></li>
             </ul>
             <div class="logo">
                 <img src="/static/img/logo.png" alt="" id="imgLogo">
@@ -49,7 +44,6 @@
             </div>
         </nav>
     </header>
-
     <!-- Cadastro Produto -->
     <div class="modal fade" id="exampleModalLongTitleProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleProduto" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -154,7 +148,6 @@
             </div>
         </div>
     </div>
-
     <!-- Alterar mesa -->
     <div class="modal fade" id="exampleModalLongTitleMesa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleMesa" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -180,7 +173,6 @@
             </div>
         </div>
     </div>
-
     <!-- Section das div dos pedidos-->
     <section>
         {% for pedido in pedidos %}
@@ -262,7 +254,8 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <div  class="collapse pagamento" id="pagamentoColapse{{ pedido.id }}">
+                <form action="{% url 'fecharMesa' pedido.id %}" method="post" class="collapse pagamento" id="pagamentoColapse{{ pedido.id }}">
+                    {% csrf_token %}
                     <table>
                         <tr>
                             <th><h3>Forma de pagamento</h3></th>
@@ -271,16 +264,16 @@
                         <tr>
                             <td>
                                 <select name="pagamentoSelect" id="pagamentoSelect">
-                                    <option value="cartao">Cartão</option>
-                                    <option value="dinheiro">Dinheiro</option>
-                                    <option value="pix">Pix</option>
+                                    <option value="Cartão">Cartão</option>
+                                    <option value="Dinheiro">Dinheiro</option>
+                                    <option value="Pix">Pix</option>
                                 </select>
                             </td>
                             <td><input type="text" id="troco"></td>
                         </tr>
                     </table> 
-                    <a href="{% url 'fecharMesa' pedido.id %}"><button class="btnPadrao">Confirmar</button></a>
-                </div>    
+                    <button class="btnPadrao" type="submit">Confirmar</button>
+                </form>    
             </div>
           </div>
         </div>
