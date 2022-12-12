@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from stdimage.models import StdImageField
 
@@ -35,9 +36,32 @@ class mesa(models.Model):
     
 class pedido(models.Model):
     dataPedido = models.TimeField('dataHoraPedido')
+    valorPedido = models.DecimalField('valorPedido', max_digits=8, decimal_places=2)
+    porcentagemPedido = models.DecimalField('porcentagemPedido', max_digits=8, decimal_places=2)
+    subTotalPedido = models.DecimalField('subTotalPedido', max_digits=8, decimal_places=2)
     pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
     mesa = models.ForeignKey(mesa, on_delete=models.CASCADE)
-    valor = 0
+      
+    def retirarServico(self):
+        self.calcularPedido(0)
+
+    def calcularPedido(self, percentualServico):
+        # if percentualServico is 0:
+        #     self.porcentagemPedido = 0
+        # else:
+        #     self.porcentagemPedido = self.subTotalPedido / percentualServico
+
+        self.porcentagemPedido = 0 if percentualServico is 0 else self.subTotalPedido / percentualServico
+        self.valorPedido = self.subTotalPedido + self.porcentagemPedido
+
+    def adicionarItemPedido(self, percentualServico, valorUnitario):
+        self.subTotalPedido += Decimal(valorUnitario)
+        self.calcularPedido(percentualServico)
+    
+    def retirarItemPedido(self, percentualServico, valorUnitario):
+        self.subTotalPedido -= Decimal(valorUnitario)
+        self.calcularPedido(percentualServico)
+        
 
 class itemPedido(models.Model):
     valorItemPedido = models.DecimalField('valorItemPedido', max_digits=8, decimal_places=2)
@@ -47,11 +71,10 @@ class itemPedido(models.Model):
     produto = models.ForeignKey(produto, on_delete=models.CASCADE)
     pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
 
-    def calcularMesa(self):
-        return self.quantidadeItemPedido * self.produto.valorUnitario
-
-
-
+    def retirarItemPedido(self, qtdItemRetirar):
+        self.quantidadeItemPedido -= qtdItemRetirar
+        self.valorItemPedido -= self.produto.valorUnitario
+        
 class pagamento(models.Model):
     formaPagamento = models.CharField('formaPagamento', max_length=1)
     dataPagamento = models.DateField('dataPagamento')
@@ -60,10 +83,3 @@ class pagamento(models.Model):
     pessoa = models.ForeignKey(pessoa, on_delete=models.CASCADE)
     produto = models.ForeignKey(produto, on_delete=models.CASCADE)
     mesa = models.ForeignKey(mesa, on_delete=models.CASCADE)
-
-class calcularMesa:
-    pedido_id = 0
-    valorTotal = 0
-    valorPorcento = 0
-    subTotal = 0
-    
