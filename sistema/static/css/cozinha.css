@@ -1,10 +1,10 @@
 /*Card de pedidos*/
 .cardPedido {
     display: inline-block;
-    margin: 2rem;
+    margin: 1.5rem;
     margin-bottom: 0rem;
     padding: 0.5rem;
-    min-width: 25rem;
+    min-width: 22rem;
     height: auto;
     max-height: 25rem;
     

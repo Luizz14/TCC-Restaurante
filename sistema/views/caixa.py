@@ -24,7 +24,7 @@ def fecharMesa(request, id):
     mesaId.statusMesa = 'f'
 
     dateNow = datetime.now()
-    dateTime = dateNow.strftime('%Y-%d-%m %H:%M')
+    dateTime = dateNow.strftime('%Y-%d-%m')
 
     objPagamento = pagamento(
                                 formaPagamento = pagamentoForma,
@@ -63,7 +63,7 @@ def retirarItem(request, id):
     else:
         objItemPedido.delete()
 
-    objPedido.retirarItemPedido(10, objItemPedido.valorItemPedido)        
+    objPedido.retirarItemPedido(10, objItemPedido.produto.valorUnitario)        
 
     #Salva no bd
     objPedido.save()
@@ -168,21 +168,27 @@ def encerrarDia(request):
     valorTotalPix = 0
 
     for objPagamento in pagamento.objects.all():
-        # if objPagamento.dataPagamento == dateTime:
-        valorTotal += objPagamento.valorPagamento
-        valorSubTotal += objPagamento.valorPagamentoSubTotal
-        valorServico += objPagamento.valorPagamentoServico
+        print(f'Obj data: {objPagamento.dataPagamento} data atual: {dateTime}')
+        print(type(objPagamento.dataPagamento))
+        print(type(dateTime))
+        if str(objPagamento.dataPagamento) == dateTime:
+            print('uai so ')
+            valorTotal += objPagamento.valorPagamento
+            valorSubTotal += objPagamento.valorPagamentoSubTotal
+            valorServico += objPagamento.valorPagamentoServico
 
-        if objPagamento.formaPagamento == 'Cartão':
-            valorTotalCartao += objPagamento.valorPagamento
+            if objPagamento.formaPagamento == 'Cartão':
+                valorTotalCartao += objPagamento.valorPagamento
 
-        if objPagamento.formaPagamento == 'Dinheiro':
-            valorTotalDinheiro += objPagamento.valorPagamento
+            if objPagamento.formaPagamento == 'Dinheiro':
+                valorTotalDinheiro += objPagamento.valorPagamento
 
-        if objPagamento.formaPagamento == 'Pix':
-            valorTotalPix += objPagamento.valorPagamento
+            if objPagamento.formaPagamento == 'Pix':
+                valorTotalPix += objPagamento.valorPagamento
 
     context = {
+        'dataPagamento': dateTime,
+        'objPagamento': pagamento.objects.all(),
         'valorTotal': valorTotal,
         'valorTotalCartao': valorTotalCartao,
         'valorTotalDinheiro': valorTotalDinheiro,

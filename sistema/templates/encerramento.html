@@ -44,12 +44,13 @@
             </div>
         </nav>
     </header>
-
+    <!-- Modal para as informações do dia -->
     <div class="modal" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="false">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Informações</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">Informações<br>Data: {{ dataPagamento }}</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle"></h5>
               <span class="red box" aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close"></span>
             </div>
             <div class="modal-body">
@@ -62,15 +63,22 @@
                         </tr>
                         <tr>
                             <td>
-                                <div class="bar"></div>
+                                {% for pagamento in objPagamento %}
+                                <h4>{{ pagamento.pedido.mesa.numeroMesa }}</h4>
+                                    <div class="bar"></div> 
+                                {% endfor %}
                             </td>
                             <td>    
-                                <h4>x</h4>
-                                <div class="bar"></div>
+                                {% for pagamento in objPagamento %}
+                                <h4>{{ pagamento.pedido.dataPedido }}</h4>
+                                    <div class="bar"></div> 
+                                {% endfor %}
                             </td>
                             <td>    
-                                <h4>R$ </h4>
-                                <div class="bar"></div>
+                                {% for pagamento in objPagamento %}
+                                <h4>R$ {{ pagamento.pedido.valorPedido }}</h4>
+                                    <div class="bar"></div> 
+                                {% endfor %}
                             </td>
                         </tr>
                         <tr>

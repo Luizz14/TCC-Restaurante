@@ -126,7 +126,7 @@ class itemPedido(models.Model):
         
 class pagamento(models.Model):
     formaPagamento = models.CharField('formaPagamento', max_length=9)
-    dataPagamento = models.DateTimeField('dataPagamento')
+    dataPagamento = models.DateField('dataPagamento')
     valorPagamento = models.DecimalField('valorPagamento', max_digits=8, decimal_places=2)
     valorPagamentoSubTotal = models.DecimalField('valorPagamentoSubTotal', max_digits=8, decimal_places=2)
     valorPagamentoServico = models.DecimalField('valorPagamentoServico', max_digits=8, decimal_places=2)
