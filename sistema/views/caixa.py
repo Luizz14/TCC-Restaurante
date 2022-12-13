@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from datetime import datetime
+from datetime import date, datetime
 
 from ..models import pedido, mesa, itemPedido, produto, categoria, pagamento, pessoa
 
@@ -23,12 +23,11 @@ def fecharMesa(request, id):
     mesaId = pedidoId.mesa
     mesaId.statusMesa = 'f'
 
-    dateNow = datetime.now()
-    dateTime = dateNow.strftime('%Y-%d-%m')
+    dateNow = date.today()
 
     objPagamento = pagamento(
                                 formaPagamento = pagamentoForma,
-                                dataPagamento = dateTime,
+                                dataPagamento = dateNow,
                                 valorPagamento = pedidoId.valorPedido,
                                 valorPagamentoSubTotal = pedidoId.subTotalPedido,
                                 valorPagamentoServico = pedidoId.porcentagemPedido,
@@ -157,8 +156,7 @@ def alterarMesa(request):
     return redirect(caixa)
 
 def encerrarDia(request):
-    dateNow = datetime.now()
-    dateTime = dateNow.strftime('%Y-%d-%m')
+    dateNow = date.today()
 
     valorTotal = 0
     valorSubTotal = 0
@@ -168,11 +166,7 @@ def encerrarDia(request):
     valorTotalPix = 0
 
     for objPagamento in pagamento.objects.all():
-        print(f'Obj data: {objPagamento.dataPagamento} data atual: {dateTime}')
-        print(type(objPagamento.dataPagamento))
-        print(type(dateTime))
-        if str(objPagamento.dataPagamento) == dateTime:
-            print('uai so ')
+        if objPagamento.dataPagamento == dateNow:
             valorTotal += objPagamento.valorPagamento
             valorSubTotal += objPagamento.valorPagamentoSubTotal
             valorServico += objPagamento.valorPagamentoServico
@@ -187,7 +181,7 @@ def encerrarDia(request):
                 valorTotalPix += objPagamento.valorPagamento
 
     context = {
-        'dataPagamento': dateTime,
+        'dateTime': dateNow,
         'objPagamento': pagamento.objects.all(),
         'valorTotal': valorTotal,
         'valorTotalCartao': valorTotalCartao,
@@ -196,4 +190,5 @@ def encerrarDia(request):
         'valorSubTotal': valorSubTotal,
         'valorServico': valorServico,
     }
+    
     return render(request, 'encerramento.html', context)
