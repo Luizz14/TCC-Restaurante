@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+</head>
+<body>
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    <form action="{% url 'autenticacao'%}" method="post" autocomplete="off">
+        {% csrf_token %}
+        <div class="cardLogin">
+            <h1>Login</h1>
+            <label for="usuario">Usuário</label>
+            <input type="text" name="usuario">
+            <label for="senha">Senha</label>
+            <input type="password" name="senha">
+            <button class="btnPadrao" type="submit">Entrar</button>
+        </div>
+    </form>
+</body>
+</html>

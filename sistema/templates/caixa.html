@@ -26,9 +26,11 @@
                       Opções
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleProduto">Adicionar produto</a></li>
-                      <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleCategoria">Adicionar categoria</a></li>
-                      <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleFuncionario">Cadastrar funcionário</a></li>
+                        <!-- { if user.is_superuser == 1 } -->
+                            <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleProduto">Adicionar produto</a></li>
+                            <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleCategoria">Adicionar categoria</a></li>
+                            <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleFuncionario">Cadastrar funcionário</a></li>
+                        <!-- { endif } -->
                       <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalLongTitleMesa">Mudar mesa</a></li>
                       <div class="dropdown-divider"></div>
                       <li><a class="dropdown-item" href="{% url 'encerrarDia' %}">Encerrar o dia</a></li>
@@ -98,27 +100,26 @@
                         <input type="text" name="nomeFuncionario" required>
                         <div class="bar"></div>
     
-                        <label for="valorProd">cpf</label>
-                        <input type="text" name="cpfFuncionario" required>
+                        <label for="emailFuncionario">Email</label>
+                        <input type="email" name="emailFuncionario" required>
                         <div class="bar"></div>
     
-                        <label for="valorProd">Senha</label>
+                        <label for="senhaFuncionario">Senha</label>
                         <input type="text" name="senhaFuncionario" required>
                         <div class="bar"></div>
     
-                        <label for="valorProd">telefone</label>
+                        <label for="telefoneFuncionario">Telefone</label>
                         <input type="text" name="telefoneFuncionario" required>
                         <div class="bar"></div>
     
                         <label for="tipoFuncionario">Função</label>
                         <select name="tipoFuncionario" id="tipoFuncionario" required>
-                            <option value="c">Caixa</option>
-                            <option value="z">Cozinheiro</option>
-                            <option value="g">Garçom</option>
-                            <option value="a">Administrador</option>
+                            <option value="Caixa">Caixa</option>
+                            <option value="Cozinheiro">Cozinheiro</option>
+                            <option value="Garçom">Garçom</option>
+                            <option value="Admin">Administrador</option>
                         </select>
                         <div class="bar"></div>
-
                         <button class="btnPadrao" type="submit">Confirmar</button>
                     </div>
                 </form>
@@ -176,20 +177,20 @@
     <!-- Section das div dos pedidos-->
     <section>
         {% for pedido in pedidos %}
-        {% if pedido.mesa.statusMesa == 'a' %}
-        <div class="cardMesa">
-            <h1>Mesa</h1>
-            <h2>{{ pedido.mesa.numeroMesa }}</h2>
-            <a id="horario" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
-                Entrada: {{ pedido.dataPedido }}
-            </a>
-            <a style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
-                Valor: R$ {{ pedido.valorPedido }}
-            </a>
-            <a>Garçom: {{ pedido.pessoa.nome }}</a>
-            <a href="#"><button type="button" class="btn btn-primary btnPadrao" data-toggle="modal" data-target="#exampleModalLongTitle{{ pedido.id }}">Detalhes</button></a>
-        </div>
-        {% endif %}
+            {% if pedido.mesa.statusMesa == 'a' %}
+                <div class="cardMesa">
+                    <h1>Mesa</h1>
+                    <h2>{{ pedido.mesa.numeroMesa }}</h2>
+                    <a id="horario" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                        Entrada: {{ pedido.dataPedido }}
+                    </a>
+                    <a style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                        Valor: R$ {{ pedido.valorPedido }}
+                    </a>
+                    <a>Garçom: {{ pedido.usuario.first_name }}</a>
+                    <a href="#"><button type="button" class="btn btn-primary btnPadrao" data-toggle="modal" data-target="#exampleModalLongTitle{{ pedido.id }}">Detalhes</button></a>
+                </div>
+            {% endif %}
         {% endfor %}
     </section>
     <!-- Card Mesa Detalhe-->
@@ -259,7 +260,7 @@
                     <table>
                         <tr>
                             <th><h3>Forma de pagamento</h3></th>
-                            <th><h3>Troco</h3></th>
+                            <!-- <th><h3>Troco</h3></th> -->
                         </tr>
                         <tr>
                             <td>
@@ -269,7 +270,7 @@
                                     <option value="Pix">Pix</option>
                                 </select>
                             </td>
-                            <td><input type="text" id="troco"></td>
+                            <!-- <td><input type="text" id="troco"></td> -->
                         </tr>
                     </table> 
                     <button class="btnPadrao" type="submit">Confirmar</button>

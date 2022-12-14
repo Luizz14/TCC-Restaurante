@@ -1,12 +1,12 @@
 from django.urls import URLPattern, path, include
-from .views.login import loginT, autenticacao
+from .views.login import pagLogin, redirecionarLogin
 from .views.caixa import caixa, fecharMesa, retirarItem, addProduto, addCategoria, addFuncionario, alterarMesa, retirarServico, encerrarDia
 from .views.cozinha import cozinha, cozinhaPedidoPronto, cozinhaPedidoCancelado
 from .views.cardapio import cardapio, esconderPedidoCardapio, addItemPedido
 
 urlpatterns = [
-    path('', loginT, name='loginT'),
-    path('autenticacao/', autenticacao, name='autenticacao'),
+    path('', pagLogin, name='login'),
+    path('redirecionarLogin/', redirecionarLogin, name='redirecionarLogin'),
 
     path('caixa/', caixa, name='caixa'),
     path('caixa/fecharmesa/<int:id>', fecharMesa, name='fecharMesa'),

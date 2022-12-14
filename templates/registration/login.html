@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/predefinicoes.css' %}">
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <form method="post" autocomplete="off">
+        {% csrf_token %}
+        <div class="card">
+            <h1 class="h3 mb-3 font-weight-normal">Restaurante</h1>
+            <h3 class="h3 mb-3 font-weight-normal">Informe seus dados:</h3>
+            <div class="infos">
+                <label for="usuario">E-mail</label>
+                <input type="email" id="username" name="username" placeholder="Informe seu e-mail" required autofocus>
+        
+            </div>
+            <div class="infos">
+                <label for="password" class="sr-only">Senha</label>
+                <input type="password" id="password" name="password" placeholder="Informe sua senha" required>
+            </div>        
+            
+            <!-- <div class="infos"> -->
+                <button class="btnPadrao" type="submit">Acessar</button>
+            <!-- </div> -->
+       
+            <p class="mt-5 mb-3 text-muted">&copy; {% now 'Y'%}</p>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,15 +1,19 @@
 from django.shortcuts import render, redirect
 from datetime import date, datetime
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from ..forms import CustomUsuarioCreateForm
+from ..models import pedido, mesa, itemPedido, produto, categoria, pagamento, usuario
 
-from ..models import pedido, mesa, itemPedido, produto, categoria, pagamento, pessoa
 
 def caixa(request):
-
     context = {
         'pedidos': pedido.objects.all(),
         'itemPedidos': itemPedido.objects.all(),
         'produtos': produto.objects.all(),
         'categorias': categoria.objects.all(),
+        'user': request.user,
+        'form':CustomUsuarioCreateForm(request.POST, request.FILES) 
     }
 
     return render(request, 'caixa.html', context)
@@ -32,7 +36,7 @@ def fecharMesa(request, id):
                                 valorPagamentoSubTotal = pedidoId.subTotalPedido,
                                 valorPagamentoServico = pedidoId.porcentagemPedido,
                                 pedido_id = pedidoId.id,
-                                pessoa_id = 1,
+                                usuario_id = request.user.id,
                                 mesa_id = mesaId.id,
                             )
     
@@ -104,20 +108,27 @@ def addProduto(request):
 
 def addFuncionario(request):
     nomeFunc = request.POST['nomeFuncionario']
-    cpfFunc = request.POST['cpfFuncionario']
+    emailFunc = request.POST['emailFuncionario']
     senhaFunc = request.POST['senhaFuncionario']
     telefoneFunc = request.POST['telefoneFuncionario']
     funcaoFunc = request.POST['tipoFuncionario']
+    admin = 0
 
-    func = pessoa(
-                    nome = nomeFunc,
-                    cpf = cpfFunc,
-                    senha = senhaFunc,
+    if funcaoFunc == 'Admin':
+        admin = 1 
+
+    func = usuario(
+                    first_name = nomeFunc,
+                    username = emailFunc,
+                    email = emailFunc,
                     telefone = int(telefoneFunc),
-                    tipo = funcaoFunc
-                  )
+                    funcao = funcaoFunc,
+                    is_staff = True,
+                    is_superuser = admin
+                )
 
     #Salva no bd
+    func.set_password(senhaFunc)
     func.save()
 
     return redirect(caixa)
@@ -136,12 +147,10 @@ def alterarMesa(request):
     proxNumeroMesa = request.POST['numFuturo']
 
     validacaoMesa = False
-    mensagem = 'Mesa movida com sucesso!'
 
     #Verificar se a mesa futura ja existe
     for objMesa in mesa.objects.all():
         if int(proxNumeroMesa) == objMesa.numeroMesa and objMesa.statusMesa == 'a':
-            mensagem = 'A mesa ja existe!'
             validacaoMesa = True
 
     #Localiza onde esta a mesa atual para fazer o update

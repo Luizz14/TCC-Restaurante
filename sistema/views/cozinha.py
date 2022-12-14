@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from django.views.generic import RedirectView
+from django.contrib.auth.decorators import login_required
+from ..models import produto, itemPedido, mesa, usuario, pedido, pagamento, categoria
 
-from ..models import produto, itemPedido, mesa, pessoa, pedido, pagamento, categoria
-
+# @login_required
 def cozinha(request):
     pedidoPronto = itemPedido.objects.filter(statusItem = 'p')
     pedidoAndamento = itemPedido.objects.filter(statusItem ='a')

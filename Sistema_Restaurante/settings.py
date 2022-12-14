@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-=w#pqld%87#-7b15fdubae0ow0@y^u)hwd@6%j#u$a)j(#9m0&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -129,3 +129,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# UTH_USER_MODEL = 'sistema.pessoa'
+
+# LOGIN_URL = '/caixa'
+
+AUTH_USER_MODEL = 'sistema.usuario'
+
+LOGIN_REDIRECT_URL = 'pagLogin'
+LOGOUT_REDIRECT_URL = 'index'

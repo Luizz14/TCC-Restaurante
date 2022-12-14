@@ -1,30 +1,27 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from django.views.generic import RedirectView
-from datetime import datetime
-from django.contrib.auth import authenticate, login
+from datetime import date, datetime
+from django.contrib.auth.models import User
 
 from sistema.views.caixa import caixa
+from sistema.views.cardapio import cardapio
 from sistema.views.cozinha import cozinha
 
-from ..models import produto, itemPedido, mesa, pessoa, pedido, pagamento, categoria
+from ..models import produto, itemPedido, mesa, usuario, pedido, pagamento, categoria
 from decimal import Decimal
 
-def loginT(request):
-
+def pagLogin(request):
 
     return render(request, 'login.html')
 
-def autenticacao(request):
-    userPOST = request.POST['usuario']
-    senhaPOST = request.POST['senha']
-
-    usuario = authenticate(request, username=userPOST, password=senhaPOST)
-    if usuario is not None:
-    # A backend authenticated the credentials
-        login(request, usuario)
-
-        return redirect(cozinha)
-    else:
-        # No backend authenticated the credentials
+def redirecionarLogin(request):
+    usuario = request.user
+    if usuario.funcao == 'Admin' or usuario.funcao == 'Caixa':
         return redirect(caixa)
+    if usuario.funcao == 'Garçom':
+        return redirect(cardapio)
+    if usuario.funcao == 'Cozinheiro':
+        return redirect(cozinha)
+    
+    

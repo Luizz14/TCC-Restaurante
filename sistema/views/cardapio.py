@@ -1,9 +1,11 @@
+from typing import Self
 from django.shortcuts import render, redirect
 from django.views.generic import RedirectView
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from ..models import produto, itemPedido, mesa, usuario, pedido, pagamento, categoria
 
-from ..models import produto, itemPedido, mesa, pessoa, pedido, pagamento, categoria
-
+# @login_required
 def cardapio(request):
     pedidoPronto = itemPedido.objects.filter(statusItem = 'p')
     pedidoAndamento = itemPedido.objects.filter(statusItem= 'a')
@@ -13,6 +15,7 @@ def cardapio(request):
         'produtos': produto.objects.all(),
         'itemPedidos': itemPedido.objects.all(),
         'categorias': categoria.objects.all(),
+        'user': request.user,
         'pedidoP': pedidoPronto,
         'pedidoA': pedidoAndamento,
         'pedidoC': pedidoCancelado,
@@ -80,7 +83,7 @@ def addItemPedido(request, id):
 
                 pedidos = pedido(
                                     dataPedido = horaAtual,
-                                    pessoa_id = 1,
+                                    usuario_id = request.user.id,
                                     mesa_id = mesaId,
                                     valorPedido = 0,
                                     porcentagemPedido = 0,
@@ -102,7 +105,7 @@ def addItemPedido(request, id):
         item = itemPedido(
                             quantidadeItemPedido = qtd,
                             pedido_id = pedidoId,
-                            pessoa_id = 1,
+                            usuario_id = request.user.id,
                             produto_id = produtoId,
                             statusItem = 'a',
                             valorItemPedido = valorU
